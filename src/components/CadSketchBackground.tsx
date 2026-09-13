@@ -259,7 +259,7 @@ export const CadSketchBackground: React.FC<CadSketchBackgroundProps> = ({
               ESCALA: 1:50 • PRANCHA 01/01
             </text>
             <text x="190" y="78" fill="#0F172A" fontSize="9" fontFamily="monospace" fontWeight="bold">
-              TSI ASSESSORIA &amp; ENGENHARIA
+              PLANTA TÉCNICA REGULAMENTAR
             </text>
           </g>
 

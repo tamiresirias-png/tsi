@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import Markdown from 'react-markdown';
 import { COMPANY_INFO } from '../data/company';
 import { 
   Bot, 
@@ -6,6 +7,8 @@ import {
   User, 
   Sparkles, 
   MessageSquare, 
+  MessageCircle,
+  ExternalLink,
   X, 
   HardHat, 
   ArrowRight, 
@@ -22,11 +25,11 @@ interface AiEngineerAssistantProps {
 }
 
 const PRESET_QUESTIONS = [
+  "Como funciona o Laudo Técnico (LTA) para Vigilância Sanitária?",
   "Preciso de ART para derrubar uma parede drywall no meu apartamento?",
   "Qual a diferença entre Alvará de Aprovação e Habite-se?",
   "O que o engenheiro testa na Vistoria de Entrega de Chaves?",
-  "Quanto tempo leva para regularizar um imóvel já construído em SP?",
-  "O síndico pode barrar minha reforma se eu não tiver a ART da NBR 16280?"
+  "Quanto tempo leva para regularizar um imóvel já construído em SP?"
 ];
 
 export const AiEngineerAssistant: React.FC<AiEngineerAssistantProps> = ({
@@ -38,7 +41,7 @@ export const AiEngineerAssistant: React.FC<AiEngineerAssistantProps> = ({
     {
       id: 'welcome',
       sender: 'bot',
-      text: 'Olá! Sou o **Assistente Virtual TSI**.\n\nComo posso orientar você hoje sobre **regularização de imóveis, emissão de ART (NBR 16280), laudos periciais, vistoria de entrega de chaves, habite-se ou desdobro de lote**?',
+      text: 'Olá! Sou o **Assistente Virtual TSI**.\n\nComo posso orientar você hoje sobre **laudos técnicos para vigilância sanitária (LTA), regularização de imóveis, emissão de ART (NBR 16280), habite-se ou vistorias de entrega de chaves**?',
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     }
   ]);
@@ -92,7 +95,7 @@ export const AiEngineerAssistant: React.FC<AiEngineerAssistantProps> = ({
       const errorMsg: ChatMessage = {
         id: `bot-err-${Date.now()}`,
         sender: 'bot',
-        text: `Olá! Tivemos uma breve oscilação de conexão. Nossa equipe técnica de engenheiros está online no WhatsApp ${COMPANY_INFO.phone} para te atender prontamente!`,
+        text: `Olá! Tivemos uma breve oscilação de conexão. Nossa equipe técnica de engenheiros está online no [WhatsApp](https://wa.me/5511965469664) para te atender prontamente!`,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       };
       setMessages(prev => [...prev, errorMsg]);
@@ -147,14 +150,79 @@ export const AiEngineerAssistant: React.FC<AiEngineerAssistantProps> = ({
               )}
 
               <div
-                className={`max-w-[85%] rounded-2xl p-4 text-xs sm:text-sm leading-relaxed space-y-2 shadow-sm ${
+                className={`max-w-[85%] rounded-2xl p-4 text-xs sm:text-sm leading-relaxed shadow-sm ${
                   msg.sender === 'user'
                     ? 'bg-sky-600 text-white font-medium rounded-tr-none'
                     : 'bg-white border border-slate-200 text-slate-800 rounded-tl-none'
                 }`}
               >
-                <div className="whitespace-pre-line">{msg.text}</div>
-                <div className={`text-[10px] text-right ${msg.sender === 'user' ? 'text-sky-100' : 'text-slate-400'}`}>
+                {msg.sender === 'user' ? (
+                  <div className="whitespace-pre-wrap">{msg.text}</div>
+                ) : (
+                  <div className="space-y-2">
+                    <Markdown
+                      components={{
+                        strong: ({ children }) => (
+                          <strong className="font-bold text-slate-950">{children}</strong>
+                        ),
+                        b: ({ children }) => (
+                          <strong className="font-bold text-slate-950">{children}</strong>
+                        ),
+                        a: ({ href, children }) => {
+                          const isWhatsapp = href?.includes('wa.me') || href?.includes('whatsapp');
+                          return (
+                            <a
+                              href={href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className={
+                                isWhatsapp
+                                  ? 'inline-flex items-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition-colors my-1 shadow-xs no-underline'
+                                  : 'text-sky-700 hover:text-sky-900 font-bold underline underline-offset-2 decoration-sky-300 hover:decoration-sky-600 transition-colors inline-flex items-center gap-0.5'
+                              }
+                            >
+                              {isWhatsapp && <MessageCircle className="w-3.5 h-3.5" />}
+                              <span>{children}</span>
+                              {!isWhatsapp && <ExternalLink className="w-3 h-3 ml-0.5 opacity-70" />}
+                            </a>
+                          );
+                        },
+                        p: ({ children }) => (
+                          <p className="mb-2 last:mb-0 leading-relaxed text-slate-700">{children}</p>
+                        ),
+                        ul: ({ children }) => (
+                          <ul className="my-2 ml-4 list-disc space-y-1 text-slate-700">{children}</ul>
+                        ),
+                        ol: ({ children }) => (
+                          <ol className="my-2 ml-4 list-decimal space-y-1 text-slate-700">{children}</ol>
+                        ),
+                        li: ({ children }) => (
+                          <li className="leading-relaxed pl-1">{children}</li>
+                        ),
+                        h1: ({ children }) => (
+                          <h4 className="font-bold text-slate-900 text-sm mt-3 mb-1.5">{children}</h4>
+                        ),
+                        h2: ({ children }) => (
+                          <h4 className="font-bold text-slate-900 text-sm mt-3 mb-1.5">{children}</h4>
+                        ),
+                        h3: ({ children }) => (
+                          <h5 className="font-bold text-sky-800 text-xs tracking-wide uppercase mt-3 mb-1">{children}</h5>
+                        ),
+                        hr: () => (
+                          <hr className="my-3 border-slate-200" />
+                        ),
+                        code: ({ children }) => (
+                          <code className="bg-slate-100 text-sky-800 font-mono text-[11px] px-1.5 py-0.5 rounded border border-slate-200">
+                            {children}
+                          </code>
+                        )
+                      }}
+                    >
+                      {msg.text}
+                    </Markdown>
+                  </div>
+                )}
+                <div className={`text-[10px] text-right mt-2 ${msg.sender === 'user' ? 'text-sky-100' : 'text-slate-400'}`}>
                   {msg.timestamp}
                 </div>
               </div>
@@ -221,22 +289,36 @@ export const AiEngineerAssistant: React.FC<AiEngineerAssistantProps> = ({
             </button>
           </form>
 
-          <div className="flex items-center justify-between text-[11px] text-slate-500 pt-0.5">
+          <div className="flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-500 pt-0.5">
             <span className="flex items-center gap-1">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
               TSI Engenharia • CREA-SP Habilitado
             </span>
 
-            <button
-              onClick={() => {
-                onClose();
-                onOpenQuoteModal();
-              }}
-              className="text-sky-700 hover:underline font-bold flex items-center gap-1"
-            >
-              <span>Solicitar Orçamento Formal</span>
-              <ArrowRight className="w-3 h-3" />
-            </button>
+            <div className="flex items-center gap-3">
+              <a
+                href="https://wa.me/5511965469664"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-emerald-700 hover:text-emerald-800 font-bold flex items-center gap-1.5 hover:underline"
+              >
+                <MessageCircle className="w-3.5 h-3.5 text-emerald-600" />
+                <span>WhatsApp</span>
+              </a>
+
+              <span className="text-slate-300">•</span>
+
+              <button
+                onClick={() => {
+                  onClose();
+                  onOpenQuoteModal();
+                }}
+                className="text-sky-700 hover:underline font-bold flex items-center gap-1"
+              >
+                <span>Solicitar Orçamento</span>
+                <ArrowRight className="w-3 h-3" />
+              </button>
+            </div>
           </div>
         </div>
 

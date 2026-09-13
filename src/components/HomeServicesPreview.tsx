@@ -28,12 +28,12 @@ const FEATURED_SERVICES = [
     highlight: 'Habilita venda por financiamento bancário',
   },
   {
-    id: 'laudos-tecnicos-pericias',
-    title: 'Laudos Técnicos & Perícias',
-    tag: 'Diagnóstico & Perícia',
+    id: 'laudos-tecnicos',
+    title: 'Laudos para Vigilância Sanitária (LTA)',
+    tag: 'VISA • COVISA • CVS',
     icon: ShieldAlert,
-    description: 'Pareceres técnicos com ART para identificar causas de trincas, rachaduras, infiltrações e vistorias cautelares de vizinhança.',
-    highlight: 'Validade jurídica e pericial incontestável',
+    description: 'Elaboração de LTA, projetos arquitetônicos sanitários com fluxos de processos e memoriais para clínicas, drogarias e indústrias. Laudos estruturais em segundo plano.',
+    highlight: 'Aprovação célere na Vigilância Sanitária',
   },
   {
     id: 'emissao-art-reformas',

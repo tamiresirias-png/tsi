@@ -29,7 +29,8 @@ import {
 } from 'lucide-react';
 
 interface ServicesPageProps {
-  onSelectServiceForQuote: (serviceTitle?: string) => void;
+  onSelectServiceForQuote?: (serviceTitle?: string) => void;
+  onOpenQuoteModal?: (serviceTitle?: string, note?: string) => void;
   onOpenAiAssistant?: () => void;
   onNavigate?: (page: PageView) => void;
   initialTab?: 'engenharia' | 'assessoria';
@@ -37,10 +38,18 @@ interface ServicesPageProps {
 
 export const ServicesPage: React.FC<ServicesPageProps> = ({
   onSelectServiceForQuote,
+  onOpenQuoteModal,
   onOpenAiAssistant,
   onNavigate,
   initialTab = 'engenharia'
 }) => {
+  const triggerQuote = (title?: string) => {
+    if (onOpenQuoteModal) {
+      onOpenQuoteModal(title);
+    } else if (onSelectServiceForQuote) {
+      onSelectServiceForQuote(title);
+    }
+  };
   const [activeTab, setActiveTab] = useState<'engenharia' | 'assessoria'>(initialTab);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedEngCategory, setSelectedEngCategory] = useState<string>('todos');
@@ -219,7 +228,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
                         </button>
 
                         <button
-                          onClick={() => onSelectServiceForQuote(service.title)}
+                          onClick={() => triggerQuote(service.title)}
                           className="px-5 py-2.5 rounded-lg bg-[#0B192C] hover:bg-[#1E3A5F] text-white text-xs font-bold transition-colors shadow-xs"
                         >
                           Solicitar orçamento
@@ -299,7 +308,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
                           </div>
 
                           <button
-                            onClick={() => onSelectServiceForQuote(service.title)}
+                            onClick={() => triggerQuote(service.title)}
                             className="inline-flex items-center space-x-1 font-bold text-sky-700 hover:text-sky-900"
                           >
                             <span>Solicitar orçamento deste serviço</span>
@@ -340,7 +349,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
 
                 <div className="flex flex-wrap gap-3">
                   <button
-                    onClick={() => onSelectServiceForQuote('Assessoria Administrativa e Financeira')}
+                    onClick={() => triggerQuote('Assessoria Administrativa e Financeira')}
                     className="px-6 py-3 rounded-xl bg-[#0B192C] hover:bg-[#1E3A5F] text-white text-xs sm:text-sm font-bold transition-colors shadow-xs"
                   >
                     Agendar diagnóstico gratuito para minha empresa
@@ -387,7 +396,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
 
                     <div className="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between">
                       <button
-                        onClick={() => onSelectServiceForQuote(`Assessoria: ${advisory.title}`)}
+                        onClick={() => triggerQuote(`Assessoria: ${advisory.title}`)}
                         className="text-xs font-semibold text-sky-700 hover:text-sky-900 inline-flex items-center space-x-1"
                       >
                         <span>Quero saber mais</span>
@@ -445,7 +454,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
                 </span>
 
                 <button
-                  onClick={() => onSelectServiceForQuote('Assessoria Administrativa e Financeira')}
+                  onClick={() => triggerQuote('Assessoria Administrativa e Financeira')}
                   className="px-5 py-2.5 rounded-lg bg-[#0B192C] hover:bg-[#1E3A5F] text-white text-xs font-bold transition-colors"
                 >
                   Solicitar contato de assessoria
@@ -484,7 +493,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
             </a>
 
             <button
-              onClick={() => onSelectServiceForQuote()}
+              onClick={() => triggerQuote()}
               className="inline-flex items-center space-x-2 px-6 py-3 rounded-sm bg-[#0B1522] hover:bg-slate-800 text-white text-xs sm:text-sm font-bold transition-all"
             >
               <span>Solicitar Orçamento Formal</span>

@@ -88,21 +88,38 @@ export const SCENARIOS: ScenarioOption[] = [
     importanceNote: 'Permite vender com financiamento bancário, evita multas da Prefeitura e valoriza o imóvel em até 40%.'
   },
   {
+    id: 'laudo-lta-vigilancia',
+    title: 'Laudo Técnico de Avaliação (LTA) - Vigilância Sanitária',
+    subtitle: 'Abertura, reforma ou licenciamento de clínica médica/odonto, farmácia, ótica ou comércio na VISA/COVISA',
+    icon: 'ShieldCheck',
+    recommendedService: 'Laudo Técnico para Vigilância Sanitária (LTA)',
+    recommendedServiceId: 'laudos-tecnicos',
+    timeframe: '5 a 15 dias úteis',
+    steps: [
+      'Vistoria técnica presencial para validação de layout, revestimentos laváveis e ventilação',
+      'Elaboração do Projeto Arquitetônico Sanitário com setorização e fluxos operacionais',
+      'Elaboração do Memorial Descritivo Sanitário e de Atividades',
+      'Emissão e registro da ART no CREA-SP e suporte ao protocolo na Vigilância Sanitária'
+    ],
+    requiredDocs: ['Planta ou croqui do imóvel', 'Relação das atividades / CNAEs', 'Dados da empresa ou responsável'],
+    importanceNote: 'Indispensável para emissão e renovação da Licença Sanitária (CMVS), evitando multas gravíssimas e interdição do estabelecimento.'
+  },
+  {
     id: 'laudo-infiltracao-rachadura',
-    title: 'Patologias, Infiltração ou Fissuras',
-    subtitle: 'Apareceram rachaduras, umidade, infiltração ou danos causados por obra vizinha',
+    title: 'Patologias, Trincas ou Fissuras (Secundário)',
+    subtitle: 'Apareceram rachaduras, umidade ou infiltração no imóvel (demanda pontual)',
     icon: 'AlertTriangle',
-    recommendedService: 'Laudo Técnico de Engenharia & Perícia (CREA-SP)',
-    recommendedServiceId: 'laudos-tecnicos-pericias',
+    recommendedService: 'Laudo Estrutural & Pericial de Engenharia (CREA-SP)',
+    recommendedServiceId: 'laudos-tecnicos',
     timeframe: '3 a 7 dias úteis',
     steps: [
       'Vistoria técnica presencial com registro fotográfico macro',
       'Análise de causa raiz da patologia (infiltração, assentamento, carga)',
-      'Elaboração do Laudo Pericial de Engenharia com ART registrada',
-      'Indicação das ações corretivas e diretrizes de reparo'
+      'Elaboração do Laudo Pericial com ART registrada perante o CREA',
+      'Indicação de medidas de recuperação estrutural'
     ],
     requiredDocs: ['Endereço do imóvel', 'Histórico do surgimento das falhas'],
-    importanceNote: 'Serve como prova técnica incontestável para acionar seguros, vizinhos causadores de danos ou processos judiciais.'
+    importanceNote: 'Laudo com fé pública para respaldo contra condomínio, construtora ou vizinhos.'
   },
   {
     id: 'acompanhamento-obras',

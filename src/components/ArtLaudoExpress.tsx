@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { COMPANY_INFO } from '../data/company';
+import { submitLeadForm, TARGET_EMAIL } from '../utils/contactService';
 import { 
   Award, 
   Clock, 
@@ -35,28 +36,19 @@ export const ArtLaudoExpress: React.FC<ArtLaudoExpressProps> = ({ onOpenQuoteMod
     setSuccessMessage(null);
 
     try {
-      const response = await fetch('/api/quote', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          serviceType: 'emissao-art-reformas',
-          name: clientName,
-          phone: clientPhone,
-          propertyType: 'Apartamento em Condomínio',
-          description: `Solicitação Expressa de ART NBR 16280 para reforma de: ${reformaType}. Condomínio/Edifício: ${apartmentName || 'Não informado'}`,
-          urgency: 'alta'
-        })
+      const result = await submitLeadForm({
+        serviceType: 'Emissão de ART para Reformas (NBR 16280)',
+        name: clientName,
+        phone: clientPhone,
+        propertyType: 'Apartamento em Condomínio',
+        description: `Solicitação Expressa de ART NBR 16280 para reforma de: ${reformaType}. Condomínio/Edifício: ${apartmentName || 'Não informado'}`,
+        urgency: 'alta'
       });
 
-      const data = await response.json();
-      if (data.success) {
-        setSuccessMessage(`Solicitação expressa de ART recebida com sucesso! Código de acompanhamento: ${data.trackingCode}. Nosso engenheiro entrará em contato em minutos.`);
-        setClientName('');
-        setClientPhone('');
-        setApartmentName('');
-      } else {
-        alert('Erro ao enviar solicitação. Tente novamente ou use o WhatsApp.');
-      }
+      setSuccessMessage(`Solicitação expressa de ART encaminhada com sucesso para ${TARGET_EMAIL}! Protocolo: ${result.trackingCode}. Nosso engenheiro retornará em instantes.`);
+      setClientName('');
+      setClientPhone('');
+      setApartmentName('');
     } catch (err) {
       // Fallback to direct WhatsApp
       const waText = `Olá TSI Engenharia! Preciso de emissão urgente de ART (NBR 16280) para reforma de ${reformaType} no condomínio ${apartmentName}. Nome: ${clientName}, Fone: ${clientPhone}.`;

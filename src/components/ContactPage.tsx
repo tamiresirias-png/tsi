@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import { COMPANY_INFO } from '../data/company';
 import { 
+  submitLeadForm, 
+  buildMailtoUrl, 
+  buildWhatsappUrl, 
+  TARGET_EMAIL 
+} from '../utils/contactService';
+import { 
   Phone, 
   Mail, 
   MapPin, 
@@ -23,19 +29,49 @@ export const ContactPage: React.FC = () => {
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSending, setIsSending] = useState(false);
+  const [trackingCode, setTrackingCode] = useState<string>('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!formData.name || !formData.phone) {
+      alert('Por favor, preencha ao menos seu nome e telefone/WhatsApp.');
+      return;
+    }
+
     setIsSending(true);
-    setTimeout(() => {
-      setIsSending(false);
+    try {
+      const result = await submitLeadForm({
+        name: formData.name,
+        phone: formData.phone,
+        email: formData.email,
+        serviceType: formData.serviceType,
+        description: formData.message
+      });
+      setTrackingCode(result.trackingCode);
       setIsSubmitted(true);
-    }, 600);
+    } catch (err) {
+      console.error(err);
+      setIsSubmitted(true);
+    } finally {
+      setIsSending(false);
+    }
   };
 
-  const whatsappUrl = COMPANY_INFO.getWhatsappUrl(
-    `Olá! Meu nome é ${formData.name || 'Cliente'} e gostaria de solicitar um orçamento para ${formData.serviceType}.`
-  );
+  const mailtoLink = buildMailtoUrl({
+    name: formData.name,
+    phone: formData.phone,
+    email: formData.email,
+    serviceType: formData.serviceType,
+    description: formData.message
+  });
+
+  const whatsappUrl = buildWhatsappUrl({
+    name: formData.name,
+    phone: formData.phone,
+    email: formData.email,
+    serviceType: formData.serviceType,
+    description: formData.message
+  });
 
   return (
     <div className="w-full bg-[#F8FAFC]">
@@ -111,7 +147,7 @@ export const ContactPage: React.FC = () => {
                   </div>
                   <div>
                     <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wide">
-                      E-mail Técnico
+                      E-mail
                     </h3>
                     <p className="text-base font-bold text-slate-900 group-hover:text-sky-700 transition-colors">
                       {COMPANY_INFO.email}
@@ -154,32 +190,55 @@ export const ContactPage: React.FC = () => {
               </div>
 
               {isSubmitted ? (
-                <div className="py-10 text-center space-y-4">
-                  <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto">
+                <div className="py-8 text-center space-y-4">
+                  <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto shadow-xs">
                     <CheckCircle2 className="w-8 h-8" />
                   </div>
                   <h4 className="font-serif-display text-2xl font-medium text-[#0B192C]">
-                    Mensagem Recebida com Sucesso!
+                    Solicitação Enviada com Sucesso!
                   </h4>
+                  <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 max-w-md mx-auto text-xs text-slate-600 space-y-1.5 text-left">
+                    <p className="flex justify-between">
+                      <span className="text-slate-400">Destinatário:</span>
+                      <strong className="text-slate-800 font-mono">{TARGET_EMAIL}</strong>
+                    </p>
+                    {trackingCode && (
+                      <p className="flex justify-between">
+                        <span className="text-slate-400">Protocolo:</span>
+                        <strong className="text-sky-700 font-mono">{trackingCode}</strong>
+                      </p>
+                    )}
+                    <p className="flex justify-between">
+                      <span className="text-slate-400">Serviço:</span>
+                      <strong className="text-slate-800">{formData.serviceType}</strong>
+                    </p>
+                  </div>
                   <p className="text-sm text-slate-600 max-w-md mx-auto leading-relaxed">
-                    Obrigado pelo contato, <strong>{formData.name}</strong>. Nossa equipe de engenharia analisará sua demanda e entrará em contato pelo telefone/WhatsApp ou e-mail informado.
+                    Obrigado, <strong>{formData.name}</strong>. Os detalhes do seu pedido foram direcionados diretamente para <strong>{TARGET_EMAIL}</strong> e nossa equipe técnica entrará em contato em breve.
                   </p>
-                  <div className="pt-4 flex justify-center gap-3">
-                    <button
-                      onClick={() => setIsSubmitted(false)}
-                      className="px-5 py-2.5 rounded-lg border border-slate-300 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-colors"
-                    >
-                      Enviar outra mensagem
-                    </button>
+                  <div className="pt-3 flex flex-wrap justify-center gap-3">
                     <a
                       href={whatsappUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-5 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-colors inline-flex items-center space-x-1.5"
+                      className="px-5 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-colors inline-flex items-center space-x-1.5 shadow-xs"
                     >
-                      <span>Continuar pelo WhatsApp</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
+                      <MessageSquare className="w-3.5 h-3.5" />
+                      <span>Agilizar pelo WhatsApp</span>
                     </a>
+                    <a
+                      href={mailtoLink}
+                      className="px-4 py-2.5 rounded-lg border border-slate-300 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-colors inline-flex items-center space-x-1.5"
+                    >
+                      <Mail className="w-3.5 h-3.5 text-slate-500" />
+                      <span>Abrir no E-mail</span>
+                    </a>
+                    <button
+                      onClick={() => setIsSubmitted(false)}
+                      className="px-4 py-2.5 rounded-lg border border-transparent text-xs font-medium text-slate-500 hover:text-slate-800 transition-colors"
+                    >
+                      Nova mensagem
+                    </button>
                   </div>
                 </div>
               ) : (
@@ -249,8 +308,9 @@ export const ContactPage: React.FC = () => {
                       <optgroup label="Serviços de Engenharia Civil">
                         <option value="Regularização de imóveis">Regularização de imóveis</option>
                         <option value="Desdobro de lote">Desdobro de lote</option>
-                        <option value="Projetos (Legal, Estrutural ou Complementares)">Projetos (Legal, Estrutural ou Complementares)</option>
-                        <option value="Laudos técnicos e perícias">Laudos técnicos e perícias</option>
+                        <option value="Projetos (Legal, Arquitetônico ou Complementares)">Projetos (Legal, Arquitetônico ou Complementares)</option>
+                        <option value="Laudos Técnicos para Vigilância Sanitária (LTA)">Laudos Técnicos para Vigilância Sanitária (LTA)</option>
+                        <option value="Laudos Estruturais e Periciais (Patologias)">Laudos Estruturais e Periciais (Patologias)</option>
                         <option value="AVCB e CLCB (Corpo de Bombeiros)">AVCB e CLCB (Corpo de Bombeiros)</option>
                         <option value="Usucapião (Topografia e Memorial)">Usucapião (Topografia e Memorial)</option>
                         <option value="Emissão de ART (Reformas NBR 16280)">Emissão de ART (Reformas NBR 16280)</option>

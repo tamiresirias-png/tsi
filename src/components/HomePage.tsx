@@ -41,11 +41,11 @@ const SUMMARIZED_SERVICES: QuickService[] = [
   },
   {
     index: '02',
-    id: 'laudo-tecnico',
-    title: 'Laudos Técnicos & Perícias de Engenharia',
-    summary: 'Identificação de patologias, trincas, infiltrações e pareceres com ART para fins judiciais ou extrajudiciais.',
-    norma: 'NBR 13752 / NBR 16747',
-    badge: 'Diagnóstico'
+    id: 'laudos-tecnicos',
+    title: 'Laudos para Vigilância Sanitária (LTA)',
+    summary: 'Laudo Técnico de Avaliação (LTA), adequação de fluxos, memoriais e aprovação na VISA/COVISA para clínicas, drogarias e comércios. (Laudos estruturais em segundo plano).',
+    norma: 'Portaria CVS / Legislação Sanitária',
+    badge: 'LTA Sanitário'
   },
   {
     index: '03',
@@ -120,24 +120,12 @@ export const HomePage: React.FC<HomePageProps> = ({
     <div className="w-full text-slate-900 selection:bg-sky-200 selection:text-[#0B192C]">
       
       {/* ========================================================================= */}
-      {/* 1. HERO - TOM AZUL: GELO ARQUITETÔNICO & DESENHO TÉCNICO AUTOCAD COM LOGO NO FUNDO */}
+      {/* 1. HERO - TOM AZUL: GELO ARQUITETÔNICO & DESENHO TÉCNICO AUTOCAD NO FUNDO */}
       {/* ========================================================================= */}
       <section className="relative pt-16 pb-20 lg:pt-24 lg:pb-28 border-b border-sky-200/90 overflow-hidden bg-gradient-to-b from-[#F0F6FD] via-[#F4F8FC] to-[#E5F0FA]">
         
-        {/* AutoCAD Technical Drawing Sketch Background */}
+        {/* AutoCAD Technical Floor Plan Sketch Background */}
         <CadSketchBackground opacity={0.24} />
-
-        {/* Technical TSI Logo Watermark in the Background together with the Planta CAD */}
-        <div 
-          className="absolute right-[-20px] sm:right-6 lg:right-16 top-1/2 -translate-y-1/2 w-[300px] sm:w-[440px] lg:w-[540px] pointer-events-none select-none opacity-[0.20] sm:opacity-[0.24]"
-          aria-hidden="true"
-        >
-          <img 
-            src="/logo.svg" 
-            alt="" 
-            className="w-full h-auto drop-shadow-xs" 
-          />
-        </div>
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
@@ -161,7 +149,7 @@ export const HomePage: React.FC<HomePageProps> = ({
             </h1>
             
             <p className="text-base sm:text-xl text-slate-700 font-normal leading-relaxed max-w-2xl bg-white/85 backdrop-blur-[3px] p-4 rounded-xl border border-sky-100 shadow-2xs">
-              Assessoria técnica para regularização imobiliária, emissão de ART, laudos periciais, aprovação de habite-se e vistorias de entrega de chaves com rigor normativo e comunicação direta.
+              Assessoria técnica para regularização imobiliária, laudos técnicos para vigilância sanitária (LTA), emissão de ART, aprovação de habite-se e vistorias com rigor normativo e comunicação direta.
             </p>
           </div>
 
@@ -183,7 +171,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 Inteligência Técnica 24h
               </span>
               <p className="text-xs sm:text-sm text-slate-100 font-medium">
-                Tem dúvidas sobre <strong>ART de reforma (NBR 16280)</strong>, <strong>Habite-se</strong>, <strong>AVCB</strong> ou <strong>laudos periciais</strong>?
+                Tem dúvidas sobre <strong>LTA (Vigilância Sanitária)</strong>, <strong>ART de reforma (NBR 16280)</strong>, <strong>Habite-se</strong> ou <strong>regularização</strong>?
               </p>
             </div>
           </div>
@@ -433,7 +421,7 @@ export const HomePage: React.FC<HomePageProps> = ({
                 </div>
 
                 <div>
-                  <span className="block text-[10px] font-mono text-slate-400 uppercase">E-mail Técnico</span>
+                  <span className="block text-[10px] font-mono text-slate-400 uppercase">E-mail</span>
                   <a 
                     href={`mailto:${COMPANY_INFO.email}`}
                     className="font-bold text-slate-900 hover:text-sky-700 hover:underline"

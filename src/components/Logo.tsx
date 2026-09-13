@@ -20,6 +20,7 @@ export const Logo: React.FC<LogoProps> = ({
 }) => {
   const isLight = theme === 'light';
   const [logoSrc, setLogoSrc] = useState<string>('/logo-tsi.png');
+  const [triedSvg, setTriedSvg] = useState(false);
   const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
@@ -78,8 +79,13 @@ export const Logo: React.FC<LogoProps> = ({
             alt="TSI Assessoria & Engenharia"
             className={`${imgHeightClasses[size] || imgHeightClasses.header} w-auto object-contain drop-shadow-xs transition-opacity`}
             onError={() => {
-              // If /logo-tsi.png is not found on disk yet, show fallback
-              setHasError(true);
+              // If /logo-tsi.png is not found on Vercel deployment, try /logo-tsi.svg
+              if (!triedSvg && logoSrc !== '/logo-tsi.svg') {
+                setTriedSvg(true);
+                setLogoSrc('/logo-tsi.svg');
+              } else {
+                setHasError(true);
+              }
             }}
           />
         </div>

@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import { COMPANY_INFO } from '../data/company';
 import { 
+  submitLeadForm, 
+  buildMailtoUrl, 
+  buildWhatsappUrl, 
+  TARGET_EMAIL 
+} from '../utils/contactService';
+import { 
   Send, 
   MessageCircle, 
   Mail, 
@@ -15,11 +21,12 @@ import {
 const SERVICE_OPTIONS = [
   'Regularização de imóvel',
   'Desdobro de lote',
-  'Projeto',
-  'Laudo técnico',
+  'Projeto (Legal/Arquitetônico)',
+  'Laudo Técnico para Vigilância Sanitária (LTA)',
+  'Laudo Estrutural / Pericial (Secundário)',
   'AVCB/CLCB',
   'Usucapião',
-  'ART',
+  'ART de Reforma (NBR 16280)',
   'Acompanhamento de obra',
   'Vistoria de entrega de chaves',
   'Assessoria empresarial',
@@ -34,6 +41,7 @@ export const ContactSection: React.FC = () => {
   const [message, setMessage] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [trackingCode, setTrackingCode] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,22 +52,37 @@ export const ContactSection: React.FC = () => {
 
     setLoading(true);
     try {
-      await fetch('/api/quote', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, phone, email, serviceType, description: message })
-      }).catch(() => null);
+      const res = await submitLeadForm({
+        name,
+        phone,
+        email,
+        serviceType,
+        description: message
+      });
+      setTrackingCode(res.trackingCode);
+      setSubmitted(true);
     } catch {
-      // client-side fallback
+      setSubmitted(true);
     } finally {
       setLoading(false);
-      setSubmitted(true);
     }
   };
 
-  const whatsappUrl = COMPANY_INFO.getWhatsappUrl(
-    `Olá! Me chamo ${name || 'um cliente'} e gostaria de falar com a TSI Assessoria & Engenharia sobre ${serviceType}.`
-  );
+  const mailtoLink = buildMailtoUrl({
+    name,
+    phone,
+    email,
+    serviceType,
+    description: message
+  });
+
+  const whatsappUrl = buildWhatsappUrl({
+    name,
+    phone,
+    email,
+    serviceType,
+    description: message
+  });
 
   return (
     <section id="contato" className="py-20 lg:py-28 bg-[#F8FAFC] border-b border-slate-200/80">
@@ -112,7 +135,7 @@ export const ContactSection: React.FC = () => {
                     <Mail className="w-4 h-4 text-sky-600" />
                   </div>
                   <div>
-                    <span className="block text-xs font-bold text-slate-900">E-mail Técnico</span>
+                    <span className="block text-xs font-bold text-slate-900">E-mail</span>
                     <a 
                       href={`mailto:${COMPANY_INFO.email}`}
                       className="text-slate-700 hover:text-sky-700"
@@ -164,26 +187,55 @@ export const ContactSection: React.FC = () => {
           {/* Right Column: Clean Form with 5 required fields */}
           <div className="lg:col-span-7 bg-white rounded-xl p-7 sm:p-9 border border-slate-200/90 shadow-sm">
             {submitted ? (
-              <div className="text-center py-10 space-y-4">
-                <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
+              <div className="text-center py-8 space-y-4">
+                <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto shadow-xs">
                   <CheckCircle2 className="w-8 h-8" />
                 </div>
                 <h3 className="font-serif-display text-2xl font-bold text-[#0B192C]">
-                  Mensagem recebida!
+                  Solicitação Enviada!
                 </h3>
+                <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 max-w-md mx-auto text-xs text-slate-600 space-y-1.5 text-left">
+                  <p className="flex justify-between">
+                    <span className="text-slate-400">Destinatário:</span>
+                    <strong className="text-slate-800 font-mono">{TARGET_EMAIL}</strong>
+                  </p>
+                  {trackingCode && (
+                    <p className="flex justify-between">
+                      <span className="text-slate-400">Protocolo:</span>
+                      <strong className="text-sky-700 font-mono">{trackingCode}</strong>
+                    </p>
+                  )}
+                  <p className="flex justify-between">
+                    <span className="text-slate-400">Serviço:</span>
+                    <strong className="text-slate-800">{serviceType}</strong>
+                  </p>
+                </div>
                 <p className="text-sm text-slate-600 max-w-md mx-auto leading-relaxed">
-                  Obrigado pelo contato, <strong>{name}</strong>. Nossa equipe técnica analisará sua demanda referente a <strong>{serviceType}</strong> e retornará com brevidade.
+                  Obrigado, <strong>{name}</strong>. Os dados da sua solicitação foram encaminhados diretamente para o e-mail <strong>{TARGET_EMAIL}</strong> da nossa equipe de engenharia.
                 </p>
-                <div className="pt-4">
+                <div className="pt-3 flex flex-wrap justify-center gap-3">
                   <a
                     href={whatsappUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center space-x-2 px-5 py-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-colors"
+                    className="inline-flex items-center space-x-1.5 px-5 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-colors shadow-xs"
                   >
-                    <MessageCircle className="w-4 h-4" />
-                    <span>Prefere agilizar pelo WhatsApp? Clique aqui</span>
+                    <MessageCircle className="w-3.5 h-3.5" />
+                    <span>Continuar no WhatsApp</span>
                   </a>
+                  <a
+                    href={mailtoLink}
+                    className="inline-flex items-center space-x-1.5 px-4 py-2.5 rounded-lg border border-slate-300 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-colors"
+                  >
+                    <Mail className="w-3.5 h-3.5 text-slate-500" />
+                    <span>Abrir no E-mail</span>
+                  </a>
+                  <button
+                    onClick={() => setSubmitted(false)}
+                    className="px-4 py-2.5 text-xs text-slate-500 hover:text-slate-800 font-medium"
+                  >
+                    Novo envio
+                  </button>
                 </div>
               </div>
             ) : (

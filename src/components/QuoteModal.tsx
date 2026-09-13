@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { COMPANY_INFO } from '../data/company';
 import { 
+  submitLeadForm, 
+  buildMailtoUrl, 
+  buildWhatsappUrl, 
+  TARGET_EMAIL 
+} from '../utils/contactService';
+import { 
   X, 
   Send, 
   MessageCircle, 
   CheckCircle, 
   FileText,
-  ShieldCheck
+  ShieldCheck,
+  Mail
 } from 'lucide-react';
 
 interface QuoteModalProps {
@@ -19,11 +26,12 @@ interface QuoteModalProps {
 const SERVICE_OPTIONS = [
   'Regularização de imóvel',
   'Desdobro de lote',
-  'Projeto',
-  'Laudo técnico',
+  'Projeto (Legal/Arquitetônico)',
+  'Laudo Técnico para Vigilância Sanitária (LTA)',
+  'Laudo Estrutural / Pericial (Secundário)',
   'AVCB/CLCB',
   'Usucapião',
-  'ART',
+  'ART de Reforma (NBR 16280)',
   'Acompanhamento de obra',
   'Vistoria de entrega de chaves',
   'Assessoria empresarial',
@@ -43,6 +51,7 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
   const [message, setMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [trackingCode, setTrackingCode] = useState('');
 
   useEffect(() => {
     if (initialServiceId) {
@@ -74,29 +83,37 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
     setIsSubmitting(true);
 
     try {
-      // Send to server API if available
-      await fetch('/api/quote', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name,
-          phone,
-          email,
-          serviceType,
-          description: message
-        })
-      }).catch(() => null); // Silently proceed if client-only
+      const res = await submitLeadForm({
+        name,
+        phone,
+        email,
+        serviceType,
+        description: message
+      });
+      setTrackingCode(res.trackingCode);
+      setSubmitted(true);
     } catch {
-      // Client-only fallback
+      setSubmitted(true);
     } finally {
       setIsSubmitting(false);
-      setSubmitted(true);
     }
   };
 
-  const formattedWhatsappUrl = COMPANY_INFO.getWhatsappUrl(
-    `Olá! Me chamo ${name || 'um cliente'} e gostaria de solicitar um orçamento para:\n*Serviço:* ${serviceType}\n*Telefone:* ${phone}\n*E-mail:* ${email || 'Não informado'}\n*Mensagem:* ${message || 'Gostaria de mais detalhes técnicos.'}`
-  );
+  const mailtoLink = buildMailtoUrl({
+    name,
+    phone,
+    email,
+    serviceType,
+    description: message
+  });
+
+  const formattedWhatsappUrl = buildWhatsappUrl({
+    name,
+    phone,
+    email,
+    serviceType,
+    description: message
+  });
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0B192C]/75 backdrop-blur-xs animate-in fade-in duration-150">
@@ -130,8 +147,8 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
         {/* Modal Body */}
         <div className="p-6">
           {submitted ? (
-            <div className="text-center py-6 space-y-4">
-              <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto">
+            <div className="text-center py-5 space-y-4">
+              <div className="w-14 h-14 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto shadow-xs">
                 <CheckCircle className="w-8 h-8" />
               </div>
 
@@ -139,26 +156,51 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({
                 Solicitação enviada com sucesso!
               </h4>
 
-              <p className="text-sm text-slate-600 max-w-sm mx-auto leading-relaxed">
-                Recebemos seus dados para <strong>{serviceType}</strong>. Nossa equipe técnica entrará em contato em breve.
+              <div className="bg-slate-50 border border-slate-200 rounded-xl p-3.5 text-xs text-slate-600 space-y-1 text-left max-w-sm mx-auto">
+                <p className="flex justify-between">
+                  <span className="text-slate-400">Encaminhado para:</span>
+                  <strong className="text-slate-800 font-mono">{TARGET_EMAIL}</strong>
+                </p>
+                {trackingCode && (
+                  <p className="flex justify-between">
+                    <span className="text-slate-400">Código de Acompanhamento:</span>
+                    <strong className="text-sky-700 font-mono">{trackingCode}</strong>
+                  </p>
+                )}
+                <p className="flex justify-between">
+                  <span className="text-slate-400">Serviço:</span>
+                  <strong className="text-slate-800 truncate ml-2">{serviceType}</strong>
+                </p>
+              </div>
+
+              <p className="text-xs sm:text-sm text-slate-600 max-w-sm mx-auto leading-relaxed">
+                Recebemos seus dados e os encaminhamos diretamente para o e-mail da engenharia. Nossa equipe técnica entrará em contato em breve!
               </p>
 
-              <div className="pt-3 flex flex-col sm:flex-row gap-3 justify-center">
+              <div className="pt-2 flex flex-col sm:flex-row gap-2.5 justify-center">
                 <a
                   href={formattedWhatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center space-x-2 px-5 py-3 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-colors shadow-sm"
+                  className="inline-flex items-center justify-center space-x-1.5 px-4 py-2.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-colors shadow-xs"
                 >
-                  <MessageCircle className="w-4 h-4" />
-                  <span>Agilizar no WhatsApp agora</span>
+                  <MessageCircle className="w-3.5 h-3.5" />
+                  <span>Continuar no WhatsApp</span>
+                </a>
+
+                <a
+                  href={mailtoLink}
+                  className="inline-flex items-center justify-center space-x-1.5 px-4 py-2.5 rounded-lg border border-slate-300 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-colors"
+                >
+                  <Mail className="w-3.5 h-3.5 text-slate-500" />
+                  <span>Abrir no E-mail</span>
                 </a>
 
                 <button
                   onClick={onClose}
-                  className="px-5 py-3 rounded-lg border border-slate-300 text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-colors"
+                  className="px-4 py-2.5 rounded-lg border border-transparent text-xs font-medium text-slate-500 hover:text-slate-800 transition-colors"
                 >
-                  Concluir
+                  Fechar
                 </button>
               </div>
             </div>

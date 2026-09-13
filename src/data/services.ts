@@ -137,46 +137,49 @@ export const ENGINEERING_SERVICES: ServiceItem[] = [
   {
     id: 'laudos-tecnicos',
     category: 'laudos',
-    title: 'Laudos técnicos',
-    shortDescription: 'Vistorias, avaliações e emissão de laudos e pareceres técnicos conforme a necessidade do imóvel.',
-    fullDescription: 'Elaboração de laudos periciais de engenharia, vistorias cautelares de vizinhança, pareceres de estabilidade estrutural e diagnóstico de patologias construtivas (trincas, rachaduras, recalques, umidades e infiltrações). Nossos laudos contam com fundamentação técnica rigorosa, registro fotográfico pormenorizado e validade jurídica plena perante o Judiciário, condomínios e seguradoras.',
+    title: 'Laudos Técnicos para Vigilância Sanitária (LTA)',
+    shortDescription: 'Elaboração de Laudo Técnico de Avaliação (LTA), projetos arquitetônicos sanitários, memoriais de fluxo e adequações para aprovação na Vigilância Sanitária (COVISA/VISA). Laudos periciais e estruturais complementares.',
+    fullDescription: 'Atuação técnica especializada na elaboração e aprovação do Laudo Técnico de Avaliação (LTA) perante a Vigilância Sanitária municipal e estadual (COVISA / VISA / CVS). Desenvolvemos o Projeto Arquitetônico Sanitário completo, mapeamento de fluxos operacionais (pessoas, matérias-primas, produtos, esterilização e resíduos sólidos de saúde - RSS), memorial descritivo de atividades e acabamentos laváveis, adequação física de ambientes e emissão de ART no CREA-SP. Atendemos clínicas médicas e odontológicas, drogarias e farmácias de manipulação, laboratórios, estética, cozinhas industriais, distribuidoras e indústrias.\n\nEm segundo plano e como serviço complementar sob demanda, também realizamos laudos periciais e pareceres estruturais de patologias construtivas (trincas, infiltrações e estabilidade estrutural).',
     iconName: 'ClipboardList',
-    badge: 'Perícia & Vistorias',
-    normaRef: 'ABNT NBR 13752 / NBR 16747 (Inspeção Predial)',
-    estimatedTime: '3 a 7 dias úteis',
+    badge: 'Vigilância Sanitária (LTA)',
+    normaRef: 'Portaria CVS / Legislação Sanitária (COVISA & Anvisa) • CREA-SP',
+    estimatedTime: '5 a 15 dias úteis para elaboração',
     highlights: [
-      'Vistoria in loco realizada por Engenheiro Civil habilitado',
-      'Registro fotográfico detalhado de anomalias e não conformidades',
-      'Determinação do nexo causal (origem exata do problema)',
-      'Classificação do grau de risco estrutural e operacional',
-      'Recomendações técnicas claras e ordenadas de medidas corretivas'
+      'Elaboração completa do Laudo Técnico de Avaliação (LTA) para Vigilância Sanitária',
+      'Projeto Arquitetônico Sanitário com setorização e fluxos operacionais sem cruzamentos',
+      'Memorial Descritivo Sanitário e especificação de acabamentos, iluminação e ventilação',
+      'Acompanhamento das exigências e comunique-se até a aprovação da Licença Sanitária',
+      'ART de Responsabilidade Técnica registrada perante o CREA-SP',
+      'Pareceres estruturais e laudos de patologias construtivas disponíveis em segundo plano'
     ],
     deliverables: [
-      'Laudo Técnico Pericial Completo com Relatório Fotográfico',
-      'Parecer Técnico Conclusivo e Prognóstico de Evolução',
-      'Diretrizes e Cronograma Recomendado para Reparos',
-      'ART de Laudo Técnico Registrada no CREA'
+      'Laudo Técnico de Avaliação (LTA) Completo e Fundamentado',
+      'Pranchas de Projeto Arquitetônico Sanitário com Layout e Fluxogramas',
+      'Memorial Descritivo de Atividades e Memorial das Instalações Sanitárias',
+      'ART (Anotação de Responsabilidade Técnica) Registrada no CREA-SP',
+      'Suporte técnico no protocolo e atendimento de comunique-se na Vigilância Sanitária'
     ],
     whatItInvolves: [
-      'Inspeção sensorial e instrumental no local;',
-      'Mapeamento e medição de fissuras, deformações, vazamentos e patologias;',
-      'Análise documental de projetos, histórico e manutenções anteriores;',
-      'Investigação da origem dos danos e fundamentação em normas da ABNT;',
-      'Redação do laudo e emissão da respectiva ART perante o CREA.'
+      'Vistoria técnica in loco para conferência das medidas, layout, revestimentos e ventilação;',
+      'Estudo dos fluxos de trabalho para evitar contaminações cruzadas conforme a atividade;',
+      'Desenho do projeto arquitetônico sanitário em pranchas técnicas regulamentares;',
+      'Redação detalhada do memorial descritivo sanitário e especificação de materiais;',
+      'Emissão e registro da ART no CREA-SP e orientação para o protocolo do LTA.'
     ],
     benefits: [
-      'Documento com fé pública para respaldo judicial, extrajudicial e securitário;',
-      'Diagnóstico assertivo da causa raiz, evitando reformas paliativas inúteis;',
-      'Proteção patrimonial contra danos gerados por obras lindeiras ou vizinhos;',
-      'Identificação precoce de riscos para a segurança dos ocupantes;',
-      'Orientações assertivas para tomada de decisão e contratação de reparos.'
+      'Obtenção e renovação da Licença de Funcionamento Sanitária (CMVS / CEVS);',
+      'Impedimento de multas gravíssimas, notificações e interdição do estabelecimento;',
+      'Aprovação célere através de projetos e laudos em estrita conformidade com a VISA;',
+      'Adequação correta sem desperdício de recursos em reformas desnecessárias;',
+      'Tranquilidade técnica perante conselhos de classe (CRM, CRO, CRF) e órgãos reguladores.'
     ],
     whenNeeded: [
-      'Surgimento de trincas, rachaduras ou fissuras em paredes, vigas ou pilares;',
-      'Infiltrações persistentes, umidade ascendente ou vazamentos de difícil localização;',
-      'Início de obra nova no terreno vizinho (Vistoria Cautelar de Vizinhança);',
-      'Disputas entre condôminos, construtoras ou proprietários;',
-      'Exigência de órgãos fiscalizadores, bancos ou seguradoras.'
+      'Abertura, mudança de endereço ou ampliação de clínicas médicas, odontológicas ou veterinárias;',
+      'Instalação de drogarias, farmácias de manipulação ou distribuidoras de produtos de saúde;',
+      'Adequação sanitária de laboratórios de análises clínicas, óticas e clínicas de estética;',
+      'Exigência da Vigilância Sanitária para cozinhas industriais, restaurantes e indústrias de alimentos;',
+      'Notificação ou fiscalização da COVISA/VISA exigindo regularização do LTA e projeto sanitário;',
+      'Necessidade secundária de laudo pericial para patologias, trincas ou vistoria cautelar.'
     ]
   },
   {

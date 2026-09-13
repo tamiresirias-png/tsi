@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 160" width="100%" height="100%">
+  <defs>
+    <!-- Geometric subtle blueprint lines in emblem background -->
+    <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+      <path d="M 10 0 L 0 0 0 10" fill="none" stroke="#38BDF8" stroke-width="0.3" stroke-opacity="0.2"/>
+    </pattern>
+    <!-- Gradient for structural mark -->
+    <linearGradient id="tsiGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0E2238" />
+      <stop offset="100%" stop-color="#07111C" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38BDF8" />
+      <stop offset="100%" stop-color="#0284C7" />
+    </linearGradient>
+  </defs>
+
+  <!-- Left Architectural Monogram Badge -->
+  <g transform="translate(10, 10)">
+    <!-- Base geometric shield / block -->
+    <rect x="0" y="0" width="140" height="140" rx="20" fill="url(#tsiGrad)" stroke="#1E3A5F" stroke-width="1.5" />
+    <!-- Grid overlay -->
+    <rect x="2" y="2" width="136" height="136" rx="18" fill="url(#grid)" />
+    
+    <!-- Architectural drafting angles (compass/roof geometry) -->
+    <path d="M 24 105 L 70 30 L 116 105 Z" fill="none" stroke="url(#accentGrad)" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round" />
+    <path d="M 42 76 L 98 76" fill="none" stroke="#38BDF8" stroke-width="3" stroke-linecap="round" />
+    <path d="M 70 30 L 70 105" fill="none" stroke="#38BDF8" stroke-width="2" stroke-dasharray="3 3" opacity="0.6" />
+
+    <!-- Center Monogram 'TSI' inside badge -->
+    <text 
+      x="70" 
+      y="98" 
+      text-anchor="middle" 
+      fill="#FFFFFF" 
+      font-family="system-ui, -apple-system, 'Inter', 'Segoe UI', sans-serif" 
+      font-size="28" 
+      font-weight="900" 
+      letter-spacing="-1"
+    >
+      TSI
+    </text>
+
+    <!-- Professional Accent Pin -->
+    <circle cx="70" cy="30" r="4.5" fill="#38BDF8" stroke="#0E2238" stroke-width="1.5" />
+  </g>
+
+  <!-- Right Typography Wordmark -->
+  <g transform="translate(170, 0)">
+    <!-- Main Letters: TSI -->
+    <text 
+      x="0" 
+      y="84" 
+      fill="#0B192C" 
+      font-family="system-ui, -apple-system, 'Inter', 'Segoe UI', sans-serif" 
+      font-size="68" 
+      font-weight="950" 
+      letter-spacing="-2.5"
+    >
+      TSI
+    </text>
+
+    <!-- Technical Cyan Accent Dot on the TSI title -->
+    <circle cx="126" cy="74" r="7" fill="url(#accentGrad)" />
+
+    <!-- Horizontal Engineering Technical Ruler Separator -->
+    <line x1="0" y1="102" x2="350" y2="102" stroke="#0B192C" stroke-width="3" stroke-linecap="round" />
+    <line x1="0" y1="107" x2="160" y2="107" stroke="#38BDF8" stroke-width="2" stroke-linecap="round" />
+
+    <!-- Subtitle: ASSESSORIA & ENGENHARIA -->
+    <text 
+      x="1" 
+      y="130" 
+      fill="#475569" 
+      font-family="system-ui, -apple-system, 'Inter', 'Segoe UI', sans-serif" 
+      font-size="14" 
+      font-weight="800" 
+      letter-spacing="5"
+    >
+      ASSESSORIA &amp; ENGENHARIA
+    </text>
+
+    <!-- CREA-SP active indicator tag -->
+    <text 
+      x="1" 
+      y="148" 
+      fill="#0284C7" 
+      font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" 
+      font-size="9" 
+      font-weight="700" 
+      letter-spacing="1.5"
+    >
+      RESPONSABILIDADE TÉCNICA CREA-SP
+    </text>
+  </g>
+</svg>
