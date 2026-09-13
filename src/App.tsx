@@ -10,7 +10,6 @@ import { Footer } from './components/Footer';
 import { QuoteModal } from './components/QuoteModal';
 import { WhatsAppFloatingButton } from './components/WhatsAppFloatingButton';
 import { AiEngineerAssistant } from './components/AiEngineerAssistant';
-import { LogoManager } from './components/LogoManager';
 import { Bot, Sparkles } from 'lucide-react';
 
 export default function App() {
@@ -128,9 +127,6 @@ export default function App() {
 
       {/* 2. Direct WhatsApp Contact Button */}
       <WhatsAppFloatingButton />
-
-      {/* 3. Official Logo Upload & Sync Manager */}
-      <LogoManager />
     </div>
   );
 }

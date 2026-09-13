@@ -31,8 +31,7 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({
       subtitle: 'Compreensão da necessidade e análise documental',
       description: 'Entendemos detalhadamente o seu objetivo e analisamos a situação do imóvel, da obra ou da sua empresa. Verificamos a documentação existente (matrícula, IPTU, projetos anteriores ou rotinas operacionais) para mapear o cenário real.',
       clientActions: 'Envio de documentos básicos ou relato da necessidade;',
-      tsiActions: 'Triagem preliminar e análise de viabilidade técnica;',
-      timeframe: 'Atendimento inicial em até 24h úteis'
+      tsiActions: 'Triagem preliminar e análise de viabilidade técnica;'
     },
     {
       number: '02',
@@ -40,8 +39,7 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({
       subtitle: 'Vistoria no local e identificação de diretrizes',
       description: 'Realizamos vistoria presencial minuciosa no imóvel com equipamentos adequados (trena laser, nível óptico, detector elétrico) ou reunião de diagnóstico empresarial. Identificamos pendências, não conformidades, oportunidades e a melhor rota de solução.',
       clientActions: 'Agendamento de data e acesso ao imóvel;',
-      tsiActions: 'Inspeção in loco, levantamento cadastral e relatório de diagnóstico;',
-      timeframe: 'Agendamento flexível de acordo com sua disponibilidade'
+      tsiActions: 'Inspeção in loco, levantamento cadastral e relatório de diagnóstico;'
     },
     {
       number: '03',
@@ -49,8 +47,7 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({
       subtitle: 'Desenvolvimento das peças técnicas e emissão de ART',
       description: 'Elaboramos com rigor as plantas arquitetônicas, memoriais descritivos, laudos periciais, projetos complementares ou planos de reforma conforme as normas ABNT e o Código de Obras. Registramos a Anotação de Responsabilidade Técnica (ART) no CREA.',
       clientActions: 'Aprovação do anteprojeto ou diretrizes propostas;',
-      tsiActions: 'Elaboração das pranchas, laudo conclusivo e registro de ART no CREA;',
-      timeframe: 'De 24h (reformas simples) a 15-30 dias (projetos complexos)'
+      tsiActions: 'Elaboração das pranchas, laudo conclusivo e registro de ART no CREA;'
     },
     {
       number: '04',
@@ -58,8 +55,7 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({
       subtitle: 'Conclusão e suporte até o resultado final',
       description: 'Protocolamos e acompanhamos o processo perante a Prefeitura, Cartório de Imóveis, Corpo de Bombeiros ou administração do condomínio. Caso contratado, fiscalizamos a execução das obras ou mantemos o acompanhamento periódico da assessoria.',
       clientActions: 'Recebimento dos documentos autenticados e alvarás;',
-      tsiActions: 'Acompanhamento do trâmite, cumprimento de comunique-se e entrega final;',
-      timeframe: 'Suporte contínuo até a emissão da certidão ou habite-se'
+      tsiActions: 'Acompanhamento do trâmite, cumprimento de comunique-se e entrega final;'
     }
   ];
 
@@ -120,20 +116,13 @@ export const HowItWorksPage: React.FC<HowItWorksPageProps> = ({
 
                 {/* Content Box */}
                 <div className="flex-1 bg-white rounded-2xl p-7 sm:p-8 border border-slate-200/90 shadow-xs hover:shadow-md transition-shadow">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
-                    <div>
-                      <span className="text-xs font-bold uppercase tracking-wider text-sky-600">
-                        {step.subtitle}
-                      </span>
-                      <h3 className="font-serif-display text-2xl font-medium text-[#0B192C] mt-0.5">
-                        {step.title}
-                      </h3>
-                    </div>
-
-                    <div className="flex items-center space-x-1 text-xs text-slate-500 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100 shrink-0">
-                      <Clock className="w-3.5 h-3.5 text-slate-400" />
-                      <span>{step.timeframe}</span>
-                    </div>
+                  <div className="mb-3">
+                    <span className="text-xs font-bold uppercase tracking-wider text-sky-600">
+                      {step.subtitle}
+                    </span>
+                    <h3 className="font-serif-display text-2xl font-medium text-[#0B192C] mt-0.5">
+                      {step.title}
+                    </h3>
                   </div>
 
                   <p className="text-sm text-slate-600 leading-relaxed mb-6 font-normal">
