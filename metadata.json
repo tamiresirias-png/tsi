@@ -1,0 +1,6 @@
+{
+  "name": "TSI Assessoria & Engenharia",
+  "description": "Engenharia que resolve, regulariza e acompanha. Soluções técnicas para regularização de imóveis, laudos técnicos, projetos, AVCB, desdobro de lote, usucapião, ART, acompanhamento de obras e vistoria de entrega de chaves em São Paulo.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
