@@ -14,7 +14,8 @@ import {
   Home,
   HardHat,
   AlertTriangle,
-  Award
+  Award,
+  Scale
 } from 'lucide-react';
 
 interface ServiceSimulatorProps {
@@ -122,21 +123,21 @@ export const SCENARIOS: ScenarioOption[] = [
     importanceNote: 'Laudo com fé pública para respaldo contra condomínio, construtora ou vizinhos.'
   },
   {
-    id: 'acompanhamento-obras',
-    title: 'Acompanhamento & Gestão de Obra',
-    subtitle: 'Preciso de fiscalização de engenharia para reforma ou construção civil em SP',
-    icon: 'HardHat',
-    recommendedService: 'Acompanhamento & Gerenciamento de Obras',
-    recommendedServiceId: 'gerenciamento-acompanhamento-obras',
-    timeframe: 'Conforme o cronograma da obra',
+    id: 'pericia-judicial-extrajudicial',
+    title: 'Perícia Judicial & Extrajudicial',
+    subtitle: 'Litígio cível, produção antecipada de provas, assistência técnica para advogados ou disputa extrajudicial',
+    icon: 'Scale',
+    recommendedService: 'Perícia Judicial e Extrajudicial (Engenharia Civil)',
+    recommendedServiceId: 'pericia-judicial-extrajudicial',
+    timeframe: 'Conforme prazo judicial ou 5 a 10 dias úteis',
     steps: [
-      'Alinhamento do cronograma físico-financeiro e projetos aprovados',
-      'Visitas periódicas de fiscalização no canteiro de obras',
-      'Conferência do prumo, nível, qualidade de materiais e medições',
-      'Emissão de Diário de Obra e relatórios técnicos de evolução'
+      'Análise rigorosa dos autos do processo e formulação de quesitos estratégicos',
+      'Acompanhamento presencial da diligência e vistoria do Perito do Juízo',
+      'Elaboração de Parecer Técnico Conclusivo ou Laudo Pericial Fundamentado',
+      'Manifestação e impugnação técnica com base em normas da ABNT e CPC'
     ],
-    requiredDocs: ['Projetos executivos', 'Contrato com empreiteiras', 'Cronograma da obra'],
-    importanceNote: 'Garante economia de até 30% contra retrabalhos, cumprimento de prazos e fidelidade de acabamento.'
+    requiredDocs: ['Cópia dos autos / petição inicial', 'Fotos das anomalias ou contratos', 'Endereço do imóvel periciado'],
+    importanceNote: 'Respaldo técnico probatório indispensável para defender os direitos patrimoniais do seu cliente perante o juiz.'
   },
   {
     id: 'projetos-construcao',
@@ -217,6 +218,7 @@ export const ServiceSimulator: React.FC<ServiceSimulatorProps> = ({ onOpenQuoteW
                     {scenario.icon === 'Home' && <Home className="w-5 h-5" />}
                     {scenario.icon === 'Building' && <Building className="w-5 h-5" />}
                     {scenario.icon === 'AlertTriangle' && <AlertTriangle className="w-5 h-5" />}
+                    {scenario.icon === 'Scale' && <Scale className="w-5 h-5" />}
                   </div>
 
                   <div className="flex-1">

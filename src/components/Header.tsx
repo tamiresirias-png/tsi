@@ -116,7 +116,7 @@ export const Header: React.FC<HeaderProps> = ({
           </nav>
 
           {/* Right Action Buttons */}
-          <div className="hidden sm:flex items-center space-x-2.5">
+          <div className="hidden lg:flex items-center space-x-2.5">
             {/* Assistente Virtual TSI */}
             {onOpenAiAssistant && (
               <button

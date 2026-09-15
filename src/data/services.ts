@@ -315,47 +315,50 @@ export const ENGINEERING_SERVICES: ServiceItem[] = [
     ]
   },
   {
-    id: 'acompanhamento-obras',
-    category: 'engenharia',
-    title: 'Acompanhamento de obras',
-    shortDescription: 'Acompanhamento técnico da execução, verificando etapas, qualidade, conformidade e evolução dos serviços.',
-    fullDescription: 'Acompanhamento e fiscalização técnica presencial da execução de construções e reformas civis. O engenheiro atua como os olhos técnicos do cliente no canteiro de obras, verificando se a mão de obra segue fielmente os projetos aprovados, as boas práticas da engenharia, o controle de qualidade dos materiais e o cronograma físico estabelecido.',
-    iconName: 'HardHat',
-    badge: 'Fiscalização Presencial',
-    normaRef: 'Normas Técnicas da ABNT e Boas Práticas Construtivas',
-    estimatedTime: 'Durante o período da obra',
+    id: 'pericia-judicial-extrajudicial',
+    category: 'laudos',
+    title: 'Perícia Judicial e Extrajudicial',
+    shortDescription: 'Atuação especializada em perícias de engenharia civil, assistência técnica jurídica em processos cíveis, formulação de quesitos, laudos de constatação e impugnações técnicas.',
+    fullDescription: 'Atuação técnica e jurídica especializada na elaboração de laudos periciais de engenharia para subsidiar ações judiciais e procedimentos extrajudiciais de mediação ou conciliação. Atuamos como Perito Judicial de confiança do juízo ou como Assistente Técnico da parte (autor ou réu), formulando quesitos estratégicos, acompanhando vistorias periciais in loco, avaliando nexos causais e emitindo Pareceres Técnicos Conclusivos ou impugnações com estrita fundamentação nas normas da ABNT e no Código de Processo Civil.',
+    iconName: 'Scale',
+    badge: 'Perícia & Assistência Técnica',
+    normaRef: 'Código de Processo Civil (CPC / Lei 13.105) & ABNT NBR 13752',
+    estimatedTime: 'Conforme prazos processuais judiciais ou 5 a 10 dias úteis',
     highlights: [
-      'Visitas periódicas programadas para inspeção no canteiro',
-      'Verificação do cumprimento das especificações de projeto',
-      'Controle do alinhamento, prumo, nível, traços e cura de materiais',
-      'Relatórios periódicos ilustrados de evolução dos serviços',
-      'Suporte técnico na tomada de decisões e resolução de imprevistos'
+      'Atuação como Assistente Técnico da parte em litígios cíveis e imobiliários',
+      'Elaboração de petição de quesitos técnicos estratégicos e suplementares',
+      'Acompanhamento presencial da diligência e vistoria do perito judicial oficial',
+      'Emissão de Parecer Técnico Conclusivo ou Impugnação técnica fundamentada',
+      'Laudos de constatação e vistoria prévia de danos com registro fotográfico e fé pública',
+      'ART (Anotação de Responsabilidade Técnica) registrada perante o CREA-SP'
     ],
     deliverables: [
-      'Relatórios Técnicos Periódicos de Evolução com Fotos',
-      'Diário de Obra com Registro de Ocorrências e Orientações',
-      'Checklists de Verificação de Etapas Executadas',
-      'Atestado Técnico de Conformidade na Conclusão'
+      'Laudo Pericial de Engenharia Civil ou Parecer Técnico Conclusivo',
+      'Petição de Quesitos Técnicos formulada para o processo judicial',
+      'Relatório Técnico Fotográfico de Evidências e Danos Materiais',
+      'Manifestação / Impugnação Técnica ao Laudo Oficial do Perito do Juízo (se aplicável)',
+      'ART de Perícia e Assistência Técnica Registrada no CREA-SP'
     ],
     whatItInvolves: [
-      'Inspeção presencial dos métodos construtivos e materiais empregados;',
-      'Conferência milimétrica das cotas, esquadros e armaduras antes da concretagem;',
-      'Fiscalização de impermeabilizações e testes de estanqueidade preventiva;',
-      'Orientação aos mestres de obras e empreiteiros sobre correções necessárias;',
-      'Emissão de relatórios claros para o proprietário acompanhar o progresso real.'
+      'Análise detalhada da petição inicial, contestação e documentos constantes nos autos;',
+      'Vistoria técnica pericial minuciosa no imóvel para coleta de subsídios e provas;',
+      'Elaboração de quesitos pertinentes, elucidativos e amparados nas normas técnicas da ABNT;',
+      'Acompanhamento presencial da perícia oficial conduzida pelo perito nomeado pelo juiz;',
+      'Elaboração de parecer técnico concordante ou divergente nos prazos legais fixados pelo CPC.'
     ],
     benefits: [
-      'Redução de desperdícios, retrabalhos e custos desnecessários em obra;',
-      'Garantia de que a execução reflete a qualidade dos projetos contratados;',
-      'Cumprimento rigoroso do cronograma, evitando prorrogações sem motivo;',
-      'Tranquilidade para quem não tem tempo ou domínio técnico para fiscalizar pedreiros;',
-      'Prevenção de vícios construtivos futuros (infiltrações, fissuras, desníveis).'
+      'Respaldo técnico indispensável para embasar o trabalho do seu advogado na defesa dos seus direitos;',
+      'Determinação inequívoca de responsabilidades, nexos causais e quantificação exata de danos materiais;',
+      'Impedimento de conclusões periciais equivocadas ou prejudiciais aos interesses da parte;',
+      'Equilíbrio de forças probatórias perante o magistrado com laudo de elevado rigor técnico;',
+      'Facilitação de acordos extrajudiciais mais justos e céleres antes ou durante o litígio.'
     ],
     whenNeeded: [
-      'Construção de casas, sobrados ou reformas residenciais de médio e grande porte;',
-      'Execução de reformas comerciais onde o prazo de abertura é crucial;',
-      'Obras prediais em condomínios (recuperação de fachada, reformas de áreas comuns);',
-      'Proprietários que residem longe da obra ou trabalham em horário integral.'
+      'Ações judiciais cíveis envolvendo vícios construtivos, desabamentos, infiltrações ou trincas;',
+      'Disputas de vizinhança relativas a danos decorrentes de obras lindeiras ou escavações;',
+      'Ações de usucapião, desapropriação, demarcação, renovatória ou revisional de locação imobiliária;',
+      'Litígios contratuais entre condomínios, construtoras, empreiteiras e adquirentes;',
+      'Necessidade de assistência técnica para formulação de quesitos e acompanhamento da perícia judicial;'
     ]
   },
   {

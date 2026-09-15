@@ -27,7 +27,7 @@ const SERVICE_OPTIONS = [
   'AVCB/CLCB',
   'Usucapião',
   'ART de Reforma (NBR 16280)',
-  'Acompanhamento de obra',
+  'Perícia judicial e extrajudicial',
   'Vistoria de entrega de chaves',
   'Assessoria empresarial',
   'Outro'

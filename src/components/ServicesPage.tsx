@@ -25,7 +25,8 @@ import {
   ShieldCheck,
   TrendingUp,
   CheckCircle2,
-  CalendarCheck
+  CalendarCheck,
+  Scale
 } from 'lucide-react';
 
 interface ServicesPageProps {
@@ -67,6 +68,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({
       case 'HardHat': return <HardHat className={className} />;
       case 'CheckSquare': return <CheckSquare className={className} />;
       case 'Briefcase': return <Briefcase className={className} />;
+      case 'Scale': return <Scale className={className} />;
       default: return <Layers className={className} />;
     }
   };

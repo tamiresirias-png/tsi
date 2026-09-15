@@ -314,7 +314,7 @@ export const ContactPage: React.FC = () => {
                         <option value="AVCB e CLCB (Corpo de Bombeiros)">AVCB e CLCB (Corpo de Bombeiros)</option>
                         <option value="Usucapião (Topografia e Memorial)">Usucapião (Topografia e Memorial)</option>
                         <option value="Emissão de ART (Reformas NBR 16280)">Emissão de ART (Reformas NBR 16280)</option>
-                        <option value="Acompanhamento de obras">Acompanhamento de obras</option>
+                        <option value="Perícia judicial e extrajudicial">Perícia judicial e extrajudicial</option>
                         <option value="Vistoria de entrega de chaves">Vistoria de entrega de chaves</option>
                       </optgroup>
                       <optgroup label="Assessoria Administrativa & Financeira">

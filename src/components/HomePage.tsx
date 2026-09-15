@@ -81,11 +81,11 @@ const SUMMARIZED_SERVICES: QuickService[] = [
   },
   {
     index: '07',
-    id: 'acompanhamento-obras',
-    title: 'Acompanhamento & Gestão Técnica de Obras',
-    summary: 'Fiscalização presencial, controle de qualidade, cumprimento de cronograma e relatórios de medição.',
-    norma: 'Responsabilidade Técnica',
-    badge: 'Fiscalização'
+    id: 'pericia-judicial-extrajudicial',
+    title: 'Perícia Judicial & Extrajudicial',
+    summary: 'Atuação pericial técnica e assistência técnica às partes em processos cíveis: laudos de constatação, formulação de quesitos e impugnações.',
+    norma: 'CPC / ABNT NBR 13752',
+    badge: 'Perícia Cível'
   },
   {
     index: '08',
@@ -157,41 +157,7 @@ export const HomePage: React.FC<HomePageProps> = ({
       </section>
 
       {/* ========================================================================= */}
-      {/* 2. TÓPICO: ASSISTENTE VIRTUAL TSI - TOM AZUL: AZUL REAL ESCURO / ROYAL NAVY */}
-      {/* ========================================================================= */}
-      <section className="bg-gradient-to-r from-[#091F38] via-[#0E2F54] to-[#091F38] text-white border-b border-sky-400/30 py-4 px-4 sm:px-6 lg:px-8 shadow-inner">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
-          
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-sm bg-sky-400/20 border border-sky-400/40 text-sky-300 flex items-center justify-center shrink-0 shadow-xs">
-              <Bot className="w-5 h-5 animate-pulse" />
-            </div>
-            <div>
-              <span className="font-mono text-[11px] font-bold text-sky-300 tracking-wider uppercase block">
-                Inteligência Técnica 24h
-              </span>
-              <p className="text-xs sm:text-sm text-slate-100 font-medium">
-                Tem dúvidas sobre <strong>LTA (Vigilância Sanitária)</strong>, <strong>ART de reforma (NBR 16280)</strong>, <strong>Habite-se</strong> ou <strong>regularização</strong>?
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-center space-x-2 shrink-0">
-            <button
-              onClick={onOpenAiAssistant}
-              className="inline-flex items-center space-x-2 px-5 py-2.5 bg-sky-500 hover:bg-sky-400 text-white font-bold text-xs sm:text-sm rounded-sm shadow-md hover:shadow-lg transition-all border border-sky-300/40"
-            >
-              <Sparkles className="w-4 h-4 text-white" />
-              <span>Abrir Assistente Virtual TSI</span>
-              <ArrowRight className="w-3.5 h-3.5 text-sky-100" />
-            </button>
-          </div>
-
-        </div>
-      </section>
-
-      {/* ========================================================================= */}
-      {/* 3. TÓPICO 01: CATÁLOGO SÍNTESE - TOM AZUL: AZUL ARDÓSIA SUAVE             */}
+      {/* 2. CATÁLOGO SÍNTESE - TOM AZUL: AZUL ARDÓSIA SUAVE                        */}
       {/* ========================================================================= */}
       <section className="py-14 lg:py-20 bg-[#EDF4FA] border-b border-sky-200/90">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">

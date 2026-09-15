@@ -14,9 +14,11 @@ import {
   ArrowRight, 
   PhoneCall, 
   ShieldCheck,
-  RefreshCw
+  RefreshCw,
+  RotateCcw
 } from 'lucide-react';
 import { ChatMessage } from '../types';
+import { getTechnicalKnowledgeReply } from '../data/assistantKnowledge';
 
 interface AiEngineerAssistantProps {
   isOpen: boolean;
@@ -26,39 +28,63 @@ interface AiEngineerAssistantProps {
 
 const PRESET_QUESTIONS = [
   "Como funciona o Laudo Técnico (LTA) para Vigilância Sanitária?",
-  "Preciso de ART para derrubar uma parede drywall no meu apartamento?",
+  "Como funciona a perícia judicial e o trabalho do assistente técnico?",
+  "Preciso de ART para reforma ou alteração no apartamento?",
   "Qual a diferença entre Alvará de Aprovação e Habite-se?",
   "O que o engenheiro testa na Vistoria de Entrega de Chaves?",
   "Quanto tempo leva para regularizar um imóvel já construído em SP?"
 ];
+
+const INITIAL_MESSAGE: ChatMessage = {
+  id: 'welcome',
+  sender: 'bot',
+  text: 'Olá! Sou o **Assistente Virtual TSI**.\n\nComo posso orientar você hoje sobre **laudos técnicos para vigilância sanitária (LTA), regularização de imóveis, emissão de ART (NBR 16280), habite-se ou vistorias de entrega de chaves**?',
+  timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+};
 
 export const AiEngineerAssistant: React.FC<AiEngineerAssistantProps> = ({
   isOpen,
   onClose,
   onOpenQuoteModal
 }) => {
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    {
-      id: 'welcome',
-      sender: 'bot',
-      text: 'Olá! Sou o **Assistente Virtual TSI**.\n\nComo posso orientar você hoje sobre **laudos técnicos para vigilância sanitária (LTA), regularização de imóveis, emissão de ART (NBR 16280), habite-se ou vistorias de entrega de chaves**?',
-      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-    }
-  ]);
+  const [messages, setMessages] = useState<ChatMessage[]>([INITIAL_MESSAGE]);
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  // Close on Escape key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOpen) {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
+
+  // Auto-scroll to bottom
   useEffect(() => {
     if (isOpen) {
       messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
   }, [messages, isOpen]);
 
+  const handleResetChat = () => {
+    setMessages([
+      {
+        ...INITIAL_MESSAGE,
+        id: `welcome-${Date.now()}`,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      }
+    ]);
+    setInputMessage('');
+  };
+
   const handleSendMessage = async (textToSend?: string) => {
-    const queryText = textToSend || inputMessage;
-    if (!queryText.trim() || isLoading) return;
+    const queryText = (textToSend || inputMessage).trim();
+    if (!queryText || isLoading) return;
 
     const userMsg: ChatMessage = {
       id: `user-${Date.now()}`,
@@ -81,24 +107,29 @@ export const AiEngineerAssistant: React.FC<AiEngineerAssistantProps> = ({
         })
       });
 
-      const data = await response.json();
+      let replyText: string | null = null;
+      if (response.ok) {
+        const data = await response.json();
+        replyText = data.reply;
+      }
 
       const botMsg: ChatMessage = {
         id: `bot-${Date.now()}`,
         sender: 'bot',
-        text: data.reply || 'Desculpe, não consegui obter a resposta no momento. Entre em contato direto com a TSI Engenharia via WhatsApp.',
+        text: replyText || getTechnicalKnowledgeReply(queryText),
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       };
 
       setMessages(prev => [...prev, botMsg]);
     } catch (err) {
-      const errorMsg: ChatMessage = {
-        id: `bot-err-${Date.now()}`,
+      console.warn('Chat Assistant offline fallback engaged:', err);
+      const fallbackMsg: ChatMessage = {
+        id: `bot-${Date.now()}`,
         sender: 'bot',
-        text: `Olá! Tivemos uma breve oscilação de conexão. Nossa equipe técnica de engenheiros está online no [WhatsApp](https://wa.me/5511965469664) para te atender prontamente!`,
+        text: getTechnicalKnowledgeReply(queryText),
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       };
-      setMessages(prev => [...prev, errorMsg]);
+      setMessages(prev => [...prev, fallbackMsg]);
     } finally {
       setIsLoading(false);
     }
@@ -107,7 +138,12 @@ export const AiEngineerAssistant: React.FC<AiEngineerAssistantProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+    <div 
+      className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
       <div className="bg-white border border-slate-200 rounded-3xl w-full max-w-2xl h-[650px] max-h-[92vh] flex flex-col shadow-2xl overflow-hidden text-slate-800">
         
         {/* Header */}
@@ -128,12 +164,24 @@ export const AiEngineerAssistant: React.FC<AiEngineerAssistantProps> = ({
             </div>
           </div>
 
-          <button
-            onClick={onClose}
-            className="p-2 text-slate-400 hover:text-slate-800 rounded-lg hover:bg-slate-100 transition-colors"
-          >
-            <X className="w-5 h-5" />
-          </button>
+          <div className="flex items-center space-x-1">
+            <button
+              onClick={handleResetChat}
+              className="p-2 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-100 transition-colors"
+              title="Reiniciar conversa"
+              aria-label="Reiniciar conversa"
+            >
+              <RotateCcw className="w-4 h-4" />
+            </button>
+            <button
+              onClick={onClose}
+              className="p-2 text-slate-400 hover:text-slate-800 rounded-lg hover:bg-slate-100 transition-colors"
+              title="Fechar assistente"
+              aria-label="Fechar assistente"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
         </div>
 
         {/* Chat Messages Area */}

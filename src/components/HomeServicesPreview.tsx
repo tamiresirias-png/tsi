@@ -10,7 +10,8 @@ import {
   Check, 
   Sparkles,
   Layers,
-  ChevronRight
+  ChevronRight,
+  Scale
 } from 'lucide-react';
 
 interface HomeServicesPreviewProps {
@@ -44,12 +45,12 @@ const FEATURED_SERVICES = [
     highlight: 'Emissão ágil em até 24 a 48 horas',
   },
   {
-    id: 'gerenciamento-acompanhamento-obras',
-    title: 'Acompanhamento de Obras',
-    tag: 'Fiscalização & Gestão',
-    icon: HardHat,
-    description: 'Fiscalização presencial no canteiro de obras, conferência de prumo e nível, medição técnica e diário de obra.',
-    highlight: 'Economia real de até 25% contra retrabalhos',
+    id: 'pericia-judicial-extrajudicial',
+    title: 'Perícia Judicial & Extrajudicial',
+    tag: 'Perícia & Assistência Técnica',
+    icon: Scale,
+    description: 'Atuação pericial técnica cível e extrajudicial, assistência técnica aos advogados das partes, formulação de quesitos e laudos de constatação.',
+    highlight: 'Respaldo probatório técnico com fé pública perante a Justiça',
   },
   {
     id: 'vistoria-entrega-chaves',
