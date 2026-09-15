@@ -1,8 +1,150 @@
-// Comprehensive technical engineering knowledge base
+// Comprehensive technical engineering knowledge base and intent handler
 export function getTechnicalKnowledgeReply(message: string): string {
   const q = (message || '').toLowerCase();
 
-  // 1. Vigilância Sanitária / LTA / COVISA / CMVS
+  const isValueQuery =
+    q.includes("quanto custa") ||
+    q.includes("qual o valor") ||
+    q.includes("qual o preco") ||
+    q.includes("qual o preço") ||
+    q.includes("quanto cobram") ||
+    q.includes("quanto fica") ||
+    q.includes("quanto sai") ||
+    q.includes("tabela de preço") ||
+    q.includes("tabela de preco") ||
+    q.includes("valores") ||
+    q.includes("preços") ||
+    q.includes("precos") ||
+    q.includes("orçamento") ||
+    q.includes("orcamento") ||
+    q.includes("honorário") ||
+    q.includes("honorario") ||
+    q.includes("custo") ||
+    q.includes("custos") ||
+    (q.includes("valor") && !q.includes("vigilancia sanitária") && !q.includes("vigilância sanitária")) ||
+    (q.includes("preço") && !q.includes("vigilancia sanitária")) ||
+    (q.includes("preco") && !q.includes("vigilancia sanitária"));
+
+  const isTimeQuery =
+    q.includes("quanto tempo") ||
+    q.includes("qual o prazo") ||
+    q.includes("quantos dias") ||
+    q.includes("demora muito") ||
+    q.includes("demora quanto") ||
+    q.includes("prazo de entrega");
+
+  // ==========================================
+  // 1. TRATAMENTO ESPECÍFICO PARA PERGUNTAS DE VALORES / PREÇOS
+  // ==========================================
+  if (isValueQuery) {
+    // Se for sobre ART de Reforma
+    if (q.includes("art") || q.includes("reforma") || q.includes("drywall") || q.includes("parede")) {
+      return `Olá! Em relação aos **valores para emissão de ART de Reforma (ABNT NBR 16280)**:
+
+Não trabalhamos com um valor fixo imediato, pois os honorários técnicos dependem das características específicas da sua obra:
+- **Tipo de Intervenção:** Se envolve apenas pintura e acabamentos, demolição de alvenaria/drywall, ou alterações elétricas, hidráulicas e estruturais;
+- **Metragem e Localização:** Área do apartamento/imóvel e condomínio em que a obra será realizada;
+- **Taxa Oficial do CREA-SP:** A taxa pública de registro da ART é recolhida diretamente ao CREA e varia conforme a faixa de valor da obra;
+- **Vistoria Técnica e Plano de Reforma:** A TSI realiza a vistoria prévia e elabora o plano detalhado exigido pelo síndico.
+
+Por não termos esses dados do seu imóvel neste momento, não é possível informar um valor exato agora. Para receber um **orçamento preciso e sem compromisso**, entre em contato direto com nossos engenheiros pelo [WhatsApp](https://wa.me/5511965469664).`;
+    }
+
+    // Se for sobre LTA / Vigilância Sanitária
+    if (q.includes("lta") || q.includes("vigilancia") || q.includes("vigilância") || q.includes("sanitaria") || q.includes("sanitária") || q.includes("clinica") || q.includes("clínica")) {
+      return `Olá! Em relação ao **valor do processo de LTA (Laudo Técnico de Avaliação)** para a Vigilância Sanitária:
+
+O investimento em um LTA não possui preço fixo tabelado, pois cada estabelecimento possui exigências sanitárias exclusivas estabelecidas pela **ANVISA (RDC 50)** e pela COVISA/CVS:
+- **Atividade e Risco Sanitário:** Consultório simples, clínica médica com procedimentos invasivos, farmácia de manipulação ou estética avançada;
+- **Área do Imóvel:** Metragem total e complexidade do layout físico;
+- **Documentação Existente:** Se já há planta arquitetônica atualizada ou se a TSI precisará realizar o levantamento cadastral (*As-Built*);
+- **Projetos e Memoriais:** Elaboração do Projeto Básico de Arquitetura (PBA), memorial de atividades e fluxo sanitário, além da taxa de ART no CREA-SP e emolumentos da Vigilância.
+
+Por essas razões técnicas, não temos como passar um valor sem avaliar a sua planta ou atividade. Para maiores informações e para receber uma proposta personalizada, fale diretamente com nossos engenheiros pelo [WhatsApp](https://wa.me/5511965469664).`;
+    }
+
+    // Se for sobre Habite-se / Regularização de Imóvel
+    if (q.includes("habite") || q.includes("regulariz") || q.includes("alvara") || q.includes("alvará")) {
+      return `Olá! Em relação aos **custos para obter o Habite-se ou regularizar um imóvel**:
+
+Não é possível informar um valor fechado de imediato, pois a regularização imobiliária envolve duas frentes de custos distintas:
+1. **Honorários Técnicos de Engenharia:** Levantamento arquitetônico no local (*As-Built*), elaboração das plantas para a Prefeitura, laudo técnico de estabilidade/segurança e emissão de ART no CREA-SP (que variam conforme a área construída e a complexidade);
+2. **Taxas Públicas e Impostos:** Taxas municipais de protocolo na Prefeitura, eventuais multas ou outorga onerosa, guia de ISS da obra, **CND da Receita Federal (SERO)** e emolumentos do Cartório de Registro de Imóveis para averbação.
+
+Como cada imóvel possui uma situação cadastral única, precisamos consultar o número do contribuinte (IPTU) e a documentação para calcular os custos reais. Entre em contato com nossos engenheiros pelo [WhatsApp](https://wa.me/5511965469664) para uma análise preliminar gratuita do seu imóvel!`;
+    }
+
+    // Se for sobre Vistoria de Entrega de Chaves
+    if (q.includes("chave") || q.includes("vistoria") || q.includes("entrega") || q.includes("vicio") || q.includes("vício")) {
+      return `Olá! Em relação ao **valor da Vistoria de Entrega de Chaves (Recebimento de Imóvel)**:
+
+O custo da vistoria varia principalmente de acordo com:
+- **Metragem Privativa do Imóvel:** Apartamentos compactos, unidades padrão ou coberturas/casas de maior metragem;
+- **Áreas Inclusas:** Vistoria de vagas de garagem, depósitos privativos e áreas técnicas;
+- **Escopo do Laudo:** Emissão de Laudo Técnico Fotográfico minucioso com apontamento de não conformidades (normas **ABNT NBR 13752** e **NBR 15575**) e ART registrada no CREA-SP.
+
+Por não termos a metragem do seu imóvel no momento, não temos um valor fixo para informar aqui. Para receber o valor exato para o seu imóvel rapidamente, entre em contato pelo [WhatsApp](https://wa.me/5511965469664).`;
+    }
+
+    // Se for sobre Perícia Judicial / Assistente Técnico
+    if (q.includes("pericia") || q.includes("perícia") || q.includes("judicial") || q.includes("processo") || q.includes("assistente")) {
+      return `Olá! Em relação aos **honorários para Perícia Judicial e Assistência Técnica Cível (Art. 466 do CPC)**:
+
+Os honorários periciais de assistência técnica são calculados com base na complexidade da demanda judicial:
+- **Volume e Fase Processual:** Análise da petição inicial, contestações e documentos já anexados aos autos;
+- **Número de Quesitos:** Formulação de quesitos técnicos iniciais, presença na diligência presencial do Perito Judicial e elaboração de parecer divergente/convergente fundamentado na **ABNT NBR 13752**;
+- **Gravidade dos Fatos:** Vícios construtivos estruturais, infiltrações, desabamentos ou desapropriações.
+
+Por depender da análise prévia do processo, não dispomos dessa informação de valores de forma imediata. Para que nossos engenheiros possam analisar os autos e enviar uma estimativa de honorários, fale conosco pelo [WhatsApp](https://wa.me/5511965469664).`;
+    }
+
+    // Resposta geral sobre valores
+    return `Olá! Em relação a **valores, custos e orçamentos**:
+
+A **TSI Engenharia & Assessoria** não trabalha com valores fixos pré-definidos, pois na engenharia civil cada serviço é personalizado e depende diretamente de fatores técnicos como:
+- **Área e Metragem:** Tamanho do imóvel ou volume da reforma/projeto;
+- **Grau de Complexidade:** Se envolve estrutura, vigilância sanitária (RDC 50), laudos judiciais ou apenas regularização cadastral;
+- **Localização e Exigências:** Órgãos competentes (Prefeitura, CREA-SP, COVISA ou Bombeiros);
+- **Taxas Oficiais de Terceiros:** Emolumentos públicos e taxas de órgãos emissores.
+
+Para que você não tenha surpresas e receba uma proposta honesta, precisa e sem compromisso, pedimos que entre em contato diretamente com nossa equipe de engenheiros pelo [WhatsApp](https://wa.me/5511965469664) ou clique no botão **Solicitar Orçamento** informando os dados básicos do seu imóvel!`;
+  }
+
+  // ==========================================
+  // 2. TRATAMENTO ESPECÍFICO PARA PRAZOS / TEMPO
+  // ==========================================
+  if (isTimeQuery) {
+    if (q.includes("habite") || q.includes("regulariz") || q.includes("imovel") || q.includes("imóvel")) {
+      return `Olá! Em relação ao **prazo para regularização de imóveis ou emissão de Habite-se**:
+
+O tempo total é composto por duas etapas:
+1. **Etapa Técnica (TSI Engenharia):** Realização da vistoria, levantamento das medidas (*As-Built*), elaboração das plantas e emissão da ART — leva em média de **5 a 15 dias úteis**;
+2. **Etapa Administrativa (Prefeitura):** Análise dos técnicos da Prefeitura, vistorias fiscais e despacho do Habite-se — em São Paulo e região metropolitana costuma variar entre **30 a 90 dias úteis**, dependendo da demanda da subprefeitura e da necessidade de atender a exigências (comunique-se).
+
+Para saber o prazo estimado para o seu endereço específico, fale com nossos engenheiros pelo [WhatsApp](https://wa.me/5511965469664).`;
+    }
+
+    if (q.includes("art") || q.includes("reforma")) {
+      return `Olá! O prazo para emissão de **ART de Reforma (NBR 16280)** com a TSI Engenharia costuma ser muito rápido:
+- Após a vistoria técnica e a definição do escopo de reforma, elaboramos o **Plano de Reforma** e registramos a **ART no CREA-SP** no prazo de **24 a 48 horas úteis**.
+
+Para dar início imediato e liberar sua obra no condomínio, fale conosco pelo [WhatsApp](https://wa.me/5511965469664).`;
+    }
+
+    if (q.includes("lta") || q.includes("vigilancia") || q.includes("vigilância")) {
+      return `Olá! Em relação ao **prazo do processo de LTA (Laudo Técnico de Avaliação)**:
+- **Elaboração Técnica (TSI):** Levantamento das instalações, desenho do Projeto Básico de Arquitetura (PBA) com fluxos sanitários e memoriais descritivos — em média **10 a 20 dias úteis**;
+- **Aprovação na Vigilância Sanitária (COVISA/CVS):** O protocolo é analisado pelos agentes sanitários, com prazo legal que costuma variar de **30 a 60 dias úteis**, a depender do órgão local.
+
+Para agilizar o seu processo, entre em contato com nossa equipe pelo [WhatsApp](https://wa.me/5511965469664).`;
+    }
+  }
+
+  // ==========================================
+  // 3. TRATAMENTO POR SERVIÇO ESPECÍFICO
+  // ==========================================
+
+  // Vigilância Sanitária / LTA / COVISA / CMVS
   if (
     q.includes("lta") ||
     q.includes("vigilancia") ||
@@ -16,23 +158,19 @@ export function getTechnicalKnowledgeReply(message: string): string {
     q.includes("farmacia") ||
     q.includes("farmácia")
   ) {
-    return `Olá! Seja muito bem-vindo à **TSI Engenharia & Assessoria**.
+    return `Olá! O **Laudo Técnico de Avaliação (LTA)** é a aprovação prévia emitida pela Vigilância Sanitária (**COVISA** municipal ou **CVS** estadual) para estabelecimentos com atividades de saúde ou interesse à saúde (clínicas médicas, odontológicas, estéticas, farmácias, laboratórios e indústrias de alimentos).
 
-O **Laudo Técnico de Avaliação (LTA)** é o documento emitido pela Vigilância Sanitária (**COVISA** em São Paulo ou **CVS** estadual) que aprova previamente as adequações físicas e os fluxos de trabalho de um estabelecimento antes da concessão da **Licença de Funcionamento Sanitária** ou do **CMVS**.
-
-Ele é obrigatório para estabelecimentos com atividades de saúde ou interesse à saúde, como consultórios médicos e odontológicos, clínicas de estética, farmácias e manipulação, estúdios de tatuagem, laboratórios e indústrias de alimentos/cosméticos.
-
-**Como a TSI conduz o processo do seu LTA:**
-- **Vistoria Técnica Presencial:** Verificação de dimensões, iluminação, ventilação e materiais de acabamento impermeáveis e laváveis;
-- **Projeto Básico de Arquitetura (PBA):** Mapeamento dos fluxos sanitários sem cruzamento de contaminação, conforme **RDC 50 da ANVISA** e Código Sanitário Estadual;
-- **Memoriais Descritivos:** Elaboração do Memorial de Atividades e Memorial de Materiais e Acabamentos;
+**Como a TSI atua no seu LTA:**
+- **Vistoria Técnica In Loco:** Análise das condições físicas, ventilação, iluminação e revestimentos impermeáveis e laváveis;
+- **Projeto Básico de Arquitetura (PBA):** Mapeamento detalhado dos fluxos operacionais sem cruzamento de contaminação, conforme as normas da **ANVISA (RDC 50)**;
+- **Memoriais Descritivos:** Memorial de atividades e memorial de materiais e acabamentos;
 - **Emissão da ART no CREA-SP:** Responsabilidade técnica legal do engenheiro;
-- **Protocolo e Acompanhamento:** Gestão do processo até o despacho deferitório final, cumprindo eventuais comunique-se.
+- **Acompanhamento até o Deferimento:** Gestão do processo até a aprovação e emissão da licença.
 
-Para que nossa equipe possa analisar a planta ou o local da sua empresa e elaborar uma proposta sem compromisso, fale agora mesmo diretamente com nossos engenheiros pelo [WhatsApp](https://wa.me/5511965469664).`;
+Para analisar a planta do seu estabelecimento ou agendar uma vistoria, entre em contato pelo [WhatsApp](https://wa.me/5511965469664).`;
   }
 
-  // 2. Perícia Judicial / Extrajudicial / Assistente Técnico / CPC / Quesitos
+  // Perícia Judicial / Extrajudicial / Assistente Técnico / CPC / Quesitos
   if (
     q.includes("pericia") ||
     q.includes("perícia") ||
@@ -44,21 +182,21 @@ Para que nossa equipe possa analisar a planta ou o local da sua empresa e elabor
     q.includes("laudo pericial") ||
     q.includes("cpc")
   ) {
-    return `Olá! Na **TSI Engenharia & Assessoria**, atuamos com excelência em **Perícia Judicial e Extrajudicial** e **Assistência Técnica Pericial** no âmbito cível.
+    return `Olá! Na **TSI Engenharia**, atuamos em **Perícia Judicial e Extrajudicial** e como **Assistente Técnico Pericial** no âmbito cível.
 
-Quando há um litígio judicial envolvendo vícios construtivos, desabamentos, infiltrações, desapropriações ou medições de obras, o juiz nomeia um Perito Judicial. As partes (autor e réu) têm o direito garantido pelo **Código de Processo Civil (Art. 466 do CPC)** de indicar o seu próprio **Assistente Técnico de Engenharia**.
+De acordo com o **Artigo 466 do Código de Processo Civil (CPC)**, a parte envolvida em litígio tem o direito de indicar um Assistente Técnico para acompanhar a perícia do Perito nomeado pelo Juiz.
 
-**Nossa atuação estratégica abrange:**
-- **Análise Prévia dos Autos:** Estudo detalhado da petição inicial, contestações e documentos técnicos acostados aos autos;
-- **Formulação de Quesitos Estratégicos:** Quesitos técnicos direcionados para esclarecer pontos cruciais e proteger os interesses do contratante;
-- **Acompanhamento Presencial da Diligência:** Presença do nosso engenheiro no dia da vistoria oficial do Perito do Juízo, fiscalizando a metodologia de inspeção;
-- **Parecer Técnico Conclusivo:** Elaboração de Parecer Técnico Pericial convergente ou divergente, fundamentado na norma **ABNT NBR 13752** (Perícias de Engenharia na Construção Civil);
-- **Impugnações e Quesitos Suplementares:** Resposta e esclarecimento sobre laudos periciais judiciais que apresentem falhas metodológicas.
+**Nossa atuação abrange:**
+- **Análise Preliminar dos Autos:** Estudo aprofundado dos fatos e documentos técnicos;
+- **Formulação de Quesitos Técnicos:** Elaboração de perguntas estratégicas para direcionar a perícia a favor da verdade técnica;
+- **Acompanhamento Presencial da Diligência:** Nosso engenheiro comparece no dia da inspeção oficial com o perito judicial;
+- **Parecer Técnico Conclusivo:** Emissão de laudo técnico fundamentado na **ABNT NBR 13752** para anexação aos autos;
+- **Impugnações:** Manifestação técnica fundamentada caso o laudo do perito judicial apresente falhas ou omissões.
 
-Para indicar a TSI como assistente técnica ou solicitar um parecer preliminar para instrução da ação, entre em contato diretamente com nossos engenheiros pelo [WhatsApp](https://wa.me/5511965469664).`;
+Para indicar a TSI como assistente técnica no seu processo, fale diretamente com nossos engenheiros pelo [WhatsApp](https://wa.me/5511965469664).`;
   }
 
-  // 3. ART de Reforma / Drywall / Paredes / ABNT NBR 16280
+  // ART de Reforma / Drywall / Paredes / NBR 16280
   if (
     q.includes("art") ||
     q.includes("reforma") ||
@@ -69,27 +207,18 @@ Para indicar a TSI como assistente técnica ou solicitar um parecer preliminar p
     q.includes("condomínio") ||
     q.includes("16280")
   ) {
-    return `Olá! Essa é uma das dúvidas mais frequentes que recebemos na **TSI Engenharia & Assessoria**.
+    return `Olá! Conforme a norma **ABNT NBR 16280 (Reforma em Edificações)** e o regimento interno dos condomínios, qualquer intervenção que possa alterar a segurança, os sistemas ou a estrutura predial exige **ART de Engenheiro e Plano de Reforma**.
 
-De acordo com a norma **ABNT NBR 16280 (Reforma em Edificações)** e as regras da maioria dos condomínios residenciais e comerciais, **é obrigatória a emissão de ART (Anotação de Responsabilidade Técnica)** no CREA para quaisquer alterações que possam impactar a segurança, a estrutura ou os sistemas prediais.
+**Exigem emissão de ART:**
+- Demolição ou remanejamento de paredes (inclusive drywall ou alvenaria de vedação);
+- Modificações em instalações elétricas (**NBR 5410**), hidráulicas ou de gás;
+- Instalação de ar-condicionado (carga elétrica e fixação externa);
+- Envidraçamento de sacada e troca de revestimentos pesados.
 
-**Exigem emissão de ART e Plano de Reforma:**
-- Demolição ou alteração de paredes (mesmo divisórias em drywall ou alvenaria sem função estrutural, para atestar que não comprometem a estrutura do edifício);
-- Abertura de vãos em alvenaria estrutural (estritamente vedado sem estudo e reforço estrutural específico);
-- Alteração ou ampliação de instalações elétricas (**ABNT NBR 5410**), hidráulicas ou de gás;
-- Instalação de ar-condicionado (carga elétrica e sobrepeso em fachadas/sacadas);
-- Envidraçamento de sacada e troca de revestimentos pesados (porcelanatos de grande formato com sobrecarga de laje).
-
-**Como funciona o nosso atendimento:**
-1. Realizamos a vistoria técnica e a análise das alterações pretendidas;
-2. Elaboramos o **Plano de Reforma detalhado** exigido pela administradora e pelo síndico;
-3. Emitimos a **ART registrada no CREA-SP** com agilidade;
-4. Oferecemos suporte completo para aprovação junto ao condomínio.
-
-Precisa de ART para sua reforma com rapidez? Fale agora com nossa equipe pelo [WhatsApp](https://wa.me/5511965469664).`;
+A TSI realiza a vistoria prévia, emite o plano de reforma com memorial descritivo e registra a **ART no CREA-SP** para liberação imediata junto ao condomínio. Fale com nossa equipe pelo [WhatsApp](https://wa.me/5511965469664).`;
   }
 
-  // 4. Habite-se / Alvará de Aprovação / Regularização de Imóvel / Anistia / Tempo
+  // Habite-se / Alvará / Regularização de Imóvel
   if (
     q.includes("habite") ||
     q.includes("alvara") ||
@@ -100,56 +229,40 @@ Precisa de ART para sua reforma com rapidez? Fale agora com nossa equipe pelo [W
     q.includes("construíd") ||
     q.includes("iptu") ||
     q.includes("cnd") ||
-    q.includes("averb") ||
-    q.includes("tempo") ||
-    q.includes("prazo")
+    q.includes("averb")
   ) {
-    return `Olá! A **TSI Engenharia & Assessoria** é especialista em regularização completa de imóveis residenciais, comerciais e industriais em São Paulo e Região Metropolitana.
+    return `Olá! A **TSI Engenharia** é especializada na regularização integral de imóveis residenciais, comerciais e industriais.
 
-**A diferença entre Alvará de Aprovação e Habite-se:**
-- **Alvará de Aprovação / Execução:** É a licença expedida pela Prefeitura **antes** do início da construção ou reforma, autorizando a execução do projeto conforme a Lei de Zoneamento e o Código de Obras;
-- **Habite-se (Certificado de Conclusão de Obra):** É o documento emitido pela Prefeitura **após a conclusão**, atestando que a edificação foi construída em conformidade com o projeto aprovado e possui condições plenas de habitabilidade e segurança.
+**Diferença principal entre Alvará e Habite-se:**
+- **Alvará de Aprovação/Execução:** Autorização expedida pela Prefeitura **antes** da obra começar;
+- **Habite-se (Certificado de Conclusão de Obra):** Documento expedido **após a conclusão**, atestando que o imóvel foi construído conforme as leis e está seguro para ocupação.
 
-**Por que o Habite-se e a regularização são indispensáveis?**
-Sem o Habite-se, você não consegue obter a **CND da Receita Federal (SERO)** nem registrar a averbação da construção na matrícula do Cartório de Imóveis, o que inviabiliza financiamentos bancários (Caixa, bancos privados) e sujeita o imóvel a multas municipais. O prazo médio de análise municipal costuma variar de 30 a 90 dias úteis dependendo do tipo de processo.
+Sem o Habite-se, o imóvel não pode ser financiado em bancos e não pode receber a averbação na matrícula do Cartório de Registro de Imóveis. Realizamos o levantamento cadastral (*As-Built*), aprovação na Prefeitura, regularização no INSS/Receita Federal (**SERO**) e averbação em Cartório.
 
-**Etapas do processo com a TSI:**
-- Levantamento arquitetônico cadastral in loco (*As-Built*);
-- Emissão de ART no CREA-SP e montagem do processo administrativo;
-- Protocolo eletrônico e atendimento a exigências da Prefeitura;
-- Apoio para CND do INSS e Averbação em Cartório de Registro de Imóveis.
-
-Quer regularizar seu imóvel ou tirar o Habite-se? Fale diretamente com nossos engenheiros pelo [WhatsApp](https://wa.me/5511965469664).`;
+Fale com nossos engenheiros pelo [WhatsApp](https://wa.me/5511965469664) para analisarmos a situação do seu imóvel.`;
   }
 
-  // 5. Vistoria de Entrega de Chaves / Recebimento de Imóvel
+  // Vistoria de Entrega de Chaves / Recebimento de Imóvel
   if (
     q.includes("chave") ||
     q.includes("vistoria") ||
     q.includes("entrega") ||
     q.includes("vicio") ||
     q.includes("vício") ||
-    q.includes("construtora") ||
-    q.includes("apartamento novo")
+    q.includes("construtora")
   ) {
-    return `Olá! A **Vistoria de Entrega de Chaves** da **TSI Engenharia** é um dos serviços mais importantes para quem adquiriu um imóvel novo na planta ou usado.
+    return `Olá! Na **Vistoria de Entrega de Chaves**, nosso engenheiro civil acompanha você no dia marcado pela construtora para fiscalizar minuciosamente o imóvel antes de você assinar o termo de recebimento.
 
-O engenheiro civil atua ao seu lado no dia agendado pela construtora para realizar uma inspeção técnica rigorosa baseada na **ABNT NBR 13752** e **ABNT NBR 15575** (Norma de Desempenho).
+Realizamos uma inspeção baseada nas normas **ABNT NBR 13752** e **ABNT NBR 15575** (Norma de Desempenho), checando:
+- Testes hidráulicos (pressão, caimento de ralos e estanqueidade);
+- Testes elétricos em todas as tomadas e disjuntores (**NBR 5410**);
+- Esquadrias, prumos de paredes, pisos ocos e nivelamento;
+- Conformidade com o Memorial Descritivo contratado.
 
-**O que verificamos no checklist de mais de 45 itens:**
-- **Nivelamento e Prumos:** Teste de esquadro e desníveis em paredes, pisos e tetos;
-- **Instalações Hidráulicas:** Teste de estanqueidade, pressão da água em torneiras e chuveiros, caimento de ralos em áreas molhadas para evitar poças;
-- **Instalações Elétricas:** Teste de continuidade em todas as tomadas, disjuntores, aterramento e identificação do quadro de força (**NBR 5410**);
-- **Esquadrias e Vidros:** Funcionamento de portas, janelas, fechaduras, vedação de borrachas e ausência de riscos ou trincas;
-- **Pisos e Revestimentos:** Verificação de peças ocas (*som cavo*), trincas ou rejuntes mal executados;
-- **Memorial Descritivo:** Conferência se as marcas de louças, metais e materiais entregues conferem exatamente com o contratado.
-
-Ao final, emitimos um **Laudo Técnico Fotográfico com ART** para que a construtora seja notificada a reparar todos os vícios antes da sua mudança!
-
-Agende sua vistoria com a TSI falando com nossos engenheiros pelo [WhatsApp](https://wa.me/5511965469664).`;
+Emitimos um **Laudo Técnico Fotográfico com ART** para exigir que a construtora corrija todos os defeitos antes da sua mudança. Agende sua vistoria pelo [WhatsApp](https://wa.me/5511965469664).`;
   }
 
-  // 6. Bombeiros / AVCB / CLCB / PPCI
+  // Bombeiros / AVCB / CLCB / PPCI
   if (
     q.includes("bombeiro") ||
     q.includes("avcb") ||
@@ -158,28 +271,19 @@ Agende sua vistoria com a TSI falando com nossos engenheiros pelo [WhatsApp](htt
     q.includes("incendio") ||
     q.includes("incêndio")
   ) {
-    return `Olá! A **TSI Engenharia** atua na elaboração de projetos de prevenção e combate a incêndio e obtenção/renovação de **AVCB** e **CLCB** junto ao Corpo de Bombeiros de SP via sistema Via Fácil.
+    return `Olá! A **TSI Engenharia** cuida do dimensionamento e protocolo de projetos de proteção contra incêndio junto ao Corpo de Bombeiros de SP:
+- **CLCB (Certificado de Licença do Corpo de Bombeiros):** Para edificações de menor porte (até 750 m² e baixo risco);
+- **AVCB (Auto de Vistoria do Corpo de Bombeiros):** Para edificações de maior porte, com projeto técnico completo.
 
-- **CLCB (Certificado de Licença do Corpo de Bombeiros):** Aplicado a edificações de baixo potencial de risco (área de até 750 m² e até 3 pavimentos);
-- **AVCB (Auto de Vistoria do Corpo de Bombeiros):** Aplicado a edificações de maior porte, condomínios e indústrias, com exigência de projeto técnico completo.
-
-Cuidamos do dimensionamento de extintores, sinalização de emergência, iluminação de rota de fuga, laudos de instalações elétricas e ART de responsabilidade.
-
-Fale com nossa equipe técnica pelo [WhatsApp](https://wa.me/5511965469664) para orientações sobre o seu estabelecimento.`;
+Emitimos as laudos e a ART para aprovação no sistema Via Fácil Bombeiros. Para consultar o seu caso, fale conosco pelo [WhatsApp](https://wa.me/5511965469664).`;
   }
 
-  // Generic comprehensive engineering response
-  return `Olá! Seja muito bem-vindo à **TSI Engenharia & Assessoria**.
+  // ==========================================
+  // 4. QUANDO NÃO HÁ INFORMAÇÃO ESPECÍFICA DISPONÍVEL
+  // ==========================================
+  return `Olá! Agradecemos pelo seu contato com a **TSI Engenharia & Assessoria**.
 
-Somos uma empresa especializada em engenharia civil e assessoria técnica e documental em São Paulo e Região Metropolitana, devidamente habilitada junto ao **CREA-SP**.
+Não tenho essa informação específica disponível no momento para responder com exatidão à sua pergunta. A TSI Engenharia é especializada em engenharia civil consultiva, emissão de ART, laudos técnicos (LTA, vistorias de entrega de chaves), perícias judiciais e regularização de imóveis (Habite-se) em São Paulo e região.
 
-**Nossas principais áreas de atuação:**
-- **Regularização de Imóveis e Habite-se:** Processos completos na Prefeitura, anistia, alvarás e averbação em Cartório;
-- **Laudo Técnico (LTA) para Vigilância Sanitária:** Adequação de clínicas, consultórios, farmácias e estéticas na COVISA/CVS;
-- **Emissão de ART para Reformas (NBR 16280):** Liberação de obras em apartamentos e condomínios com plano de reforma;
-- **Perícia Judicial e Assistência Técnica:** Engenharia diagnóstica, quesitos periciais e pareceres técnicos no CPC;
-- **Vistoria de Entrega de Chaves:** Inspeção detalhada de recebimento de imóvel com checklist de 45+ itens e laudo técnico;
-- **Projetos e AVCB/CLCB:** Projetos de arquitetura, estrutural, instalações e Corpo de Bombeiros.
-
-Como podemos orientar você sobre o seu imóvel ou projeto hoje? Se preferir, você pode falar diretamente com nossos engenheiros pelo [WhatsApp](https://wa.me/5511965469664) ou clicar em **Solicitar Orçamento**!`;
+Para maiores informações e para que nossos engenheiros possam analisar o seu caso específico com atenção aos detalhes técnicos, por favor entre em contato direto conosco pelo [WhatsApp](https://wa.me/5511965469664) ou clique no botão **Solicitar Orçamento** acima!`;
 }
